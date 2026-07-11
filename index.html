@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CameroonTalent - Emplois et Recrutement au Cameroun</title>
+    <!-- Intégration d'une police épurée -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Styles de Base et Variables --- */
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+            --border: #e5e7eb;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* --- Navbar --- */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-menu li a:hover {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* --- Structure des pages (SPA) --- */
+        .page {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Page Accueil (Home) --- */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* --- Filtres et Listes d'offres --- */
+        .filters-section {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg-light);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--white);
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .job-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+
+        .job-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .job-company {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.813rem;
+            font-weight: 500;
+            background: #e0e7ff;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .job-description {
+            font-size: 0.938rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .job-salary {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* --- Boutons --- */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .btn-primary { background: var(--primary); color: var(--white); }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-secondary { background: var(--border); color: var(--text-dark); }
+        .btn-secondary:hover { background: #d1d5db; }
+        .btn-danger { background: var(--danger); color: var(--white); }
+
+        /* --- Page Détail de l'offre --- */
+        .job-detail-container {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .job-detail-header { margin-bottom: 2rem; }
+        .job-detail-title { font-size: 2rem; font-weight: 700; }
+        .job-detail-company { font-size: 1.25rem; color: var(--primary); font-weight: 600; }
+
+        .job-detail-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .meta-label { font-size: 0.813rem; color: var(--text-light); text-transform: uppercase; }
+        .meta-value { font-weight: 600; }
+
+        .job-detail-description { margin-bottom: 2.5rem; }
+        .job-detail-description h3 { margin-bottom: 1rem; }
+
+        /* --- Espace Admin & Formulaire --- */
+        .admin-box {
+            max-width: 450px;
+            margin: 4rem auto;
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+
+        .admin-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .message.show { display: block; }
+        .message.error { background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5; }
+        .message.success { background: #d1fae5; color: var(--success); border: 1px solid #6ee7b7; }
+
+        .loading { text-align: center; padding: 3rem; color: var(--text-light); font-style: italic; }
+
+        /* --- Responsive Mobile --- */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hamburger { display: block; }
+            .filters-section { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+            .page { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barre de Navigation Réutilisable -->
+    <header>
+        <div class="navbar">
+            <div class="logo" onclick="showHome()">Cameroon<span>Talent</span></div>
+            <button class="hamburger" aria-label="Menu">☰</button>
+            <ul class="nav-menu">
+                <li><a onclick="showHome()">Accueil</a></li>
+                <li><a onclick="showJobs()">Offres d'emploi</a></li>
+                <li><a onclick="showAdmin()">Espace Admin</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- ========================================================================= -->
+        <!-- 1. PAGE D'ACCUEIL (id="home") -->
+        <!-- ========================================================================= -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>Trouvez votre prochain emploi au Cameroun</h1>
+                <p>La passerelle directe entre les talents locaux et les meilleures entreprises de Douala, Yaoundé et tout le triangle national.</p>
+                <button class="btn btn-primary" onclick="showJobs()">Explorer les offres</button>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number" id="stat-jobs">0</div>
+                    <div class="stat-label">Offres Disponibles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Vérifiées & Fiables</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 2. PAGE DES OFFRES (id="jobs") -->
+        <!-- ========================================================================= -->
+        <section id="jobs" class="page">
+            <h2 style="margin-bottom: 1.5rem;">Offres d'emploi actuelles</h2>
+            
+            <!-- Section des Filtres dynamiques -->
+            <div class="filters-section">
+                <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un poste, une entreprise...">
+                <select id="typeFilter" class="form-control">
+                    <option value="">Tous les types de contrat</option>
+                    <option value="CDI">CDI</option>
+                    <option value="CDD">CDD</option>
+                    <option value="Stage">Stage Professionnel</option>
+                    <option value="Freelance">Freelance / Consultant</option>
+                </select>
+                <select id="locationFilter" class="form-control">
+                    <option value="">Toutes les villes</option>
+                    <option value="Douala">Douala</option>
+                    <option value="Yaoundé">Yaoundé</option>
+                    <option value="Kribi">Kribi</option>
+                    <option value="Bafoussam">Bafoussam</option>
+                    <option value="En ligne">À distance (Remote)</option>
+                </select>
+            </div>
+
+            <!-- Conteneur d'affichage des cartes d'offres -->
+            <div id="jobsList" class="jobs-grid">
+                <!-- Généré dynamiquement par script.js -->
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 3. PAGE DÉTAIL D'UNE OFFRE (id="jobDetail") -->
+        <!-- ========================================================================= -->
+        <section id="jobDetail" class="page">
+            <button class="btn btn-secondary" onclick="showJobs()" style="margin-bottom: 1.5rem;">← Retour aux offres</button>
+            <div id="jobDetailContent">
+                <!-- Généré dynamiquement par script.js -->
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 4. PAGE ESPACE ADMINISTRATEUR (id="admin") -->
+        <!-- ========================================================================= -->
+        <section id="admin" class="page">
+            
+            <!-- Formulaire de Connexion (Masqué après validation réussie) -->
+            <div id="adminLogin" class="admin-box">
+                <h2 style="text-align: center; margin-bottom: 1.5rem;">Connexion Admin</h2>
+                <div id="loginError" class="message error"></div>
+                <div class="form-group">
+                    <label for="adminPassword">Mot de passe administrateur</label>
+                    <input type="password" id="adminPassword" class="form-control" placeholder="Entrez le code secret">
+                </div>
+                <button class="btn btn-primary" onclick="loginAdmin()" style="width: 100%;">Se connecter</button>
+            </div>
+
+            <!-- Panneau d'administration : Formulaire d'ajout d'offre -->
+            <div id="adminPanel" style="display: none;">
+                <div class="admin-panel-header">
+                    <h2>Tableau de bord : Publier une offre</h2>
+                    <button class="btn btn-secondary" onclick="logoutAdmin()">Déconnexion</button>
+                </div>
+
+                <div id="formMessage" class="message"></div>
+
+                <form id="jobForm" style="background: var(--white); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="jobTitle">Intitulé du poste *</label>
+                            <input type="text" id="jobTitle" class="form-control" placeholder="Ex: Développeur Full-Stack" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jobCompany">Entreprise *</label>
+                            <input type="text" id="jobCompany" class="form-control" placeholder="Ex: Nom de la structure" required>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="jobLocation">Localisation (Ville) *</label>
+                            <input type="text" id="jobLocation" class="form-control" placeholder="Ex: Douala" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jobType">Type de contrat *</label>
+                            <select id="jobType" class="form-control" required>
+                                <option value="CDI">CDI</option>
+                                <option value="CDD">CDD</option>
+                                <option value="Stage">Stage</option>
+                                <option value="Freelance">Freelance</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jobSalary">Salaire Mensuel (Optionnel)</label>
+                            <input type="text" id="jobSalary" class="form-control" placeholder="Ex: 250 000 FCFA">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jobDescription">Description complète du poste et profils requis *</label>
+                        <textarea id="jobDescription" class="form-control" rows="8" placeholder="Détaillez les missions, les compétences recherchées..." required></textarea>
+                    </div>
+
+                    <div style="text-align: right; margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary">Publier l'offre d'emploi</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Inclusion du script JS de contrôle externe -->
+    <script src="script.js"></script>
+</body>
+</html>
