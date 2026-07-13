@@ -331,7 +331,7 @@
                             1. Parcourez les offres sur notre page d'accueil ou recherchez-les à l'aide de la barre de recherche. <br>
                             2. Cliquez sur l'offre qui vous intéresse pour voir tous les détails du poste. <br>
                             3. Cliquez sur le bouton <strong>"Postuler à cette offre"</strong>. <br>
-                            4. Remplissez le formulaire de candidature intuitif en 4 étapes simples et validez votre dossier.
+                            4. Remplissez le formulaire de candidature intuitif en 4 étapes simples et valisez votre dossier.
                         </div>
                     </div>
                 </div>
@@ -633,13 +633,14 @@
 
         annoncesContainer.innerHTML = filtered.map(job => {
             const isStage = (job.title + " " + (job.description || "")).toLowerCase().includes("stage");
+            const deadline = job.deadline ? job.deadline : "25-07-2026";
             return `
                 <div class="comp-job-card">
                     <a href="#" class="comp-job-link" onclick="showJobDetails('${job.id}')">
                         ${job.company} recrute un(e) ${job.title}
                     </a>
                     <div class="comp-job-meta">
-                        Publié le 13-07-2026 | Postuler avant le 2026-07-25 <br>
+                        Publié le 13-07-2026 | Postuler avant le ${deadline} <br>
                         Expérience requise: ${job.experience || 'Débutant ou Intermédiaire'} <br>
                         <strong>${isStage ? 'Stage' : 'Job'}</strong>
                     </div>
@@ -849,46 +850,51 @@
         });
     }
 
-    // Gestion asynchrone de la Newsletter (évite le rechargement)
-    function submitNewsletter(event) {
+    // Gestion asynchrone de la Newsletter avec prise en charge du CORS Apps Script
+    async function submitNewsletter(event) {
         event.preventDefault();
 
-        const name = document.getElementById('newsName').value.trim();
-        const email = document.getElementById('newsEmail').value.trim();
+        const nameInput = document.getElementById('newsName');
+        const emailInput = document.getElementById('newsEmail');
         const btn = document.getElementById('btnNewsSubmit');
 
-        if (!name || !email) return;
+        const nameValue = nameInput.value.trim();
+        const emailValue = emailInput.value.trim();
+
+        if (!nameValue || !emailValue) return;
 
         btn.disabled = true;
         btn.textContent = "Inscription en cours...";
 
-        const payload = {
-            action: "subscribeNewsletter",
-            name: name,
-            email: email
-        };
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8" // Évite les pré-requêtes OPTIONS (CORS) avec Apps Script
+                },
+                body: JSON.stringify({
+                    action: "addNewsletter", // Correspond à ton action Google Apps Script
+                    email: emailValue,       // Doit être exactement "email"
+                    name: nameValue          // Transmis également pour collecter l'identité
+                })
+            });
 
-        fetch(API_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        })
-        .then(r => r.json())
-        .then(data => {
+            const data = await response.json();
+
             if (data.success) {
-                alert("Merci ! Votre inscription à la newsletter a été enregistrée avec succès. 🎉");
-                document.getElementById('newsletterForm').reset();
+                alert(data.message || "Inscription réussie ! 🎉");
+                document.getElementById('newsletterForm').reset(); // Vide tous les champs proprement
             } else {
-                alert("Une erreur est survenue lors de l'inscription : " + (data.message || "Erreur inconnue"));
+                alert("Erreur : " + (data.error || data.message || "Impossible de s'inscrire"));
             }
-        })
-        .catch(err => {
-            console.error("Erreur Newsletter:", err);
-            alert("Impossible de joindre le serveur. Veuillez réessayer plus tard.");
-        })
-        .finally(() => {
+        } catch (error) {
+            console.error("Détail de l'erreur:", error);
+            alert("Une erreur est survenue lors de l'inscription : Erreur de communication avec le serveur.");
+        } finally {
             btn.disabled = false;
             btn.textContent = "Souscrire";
-        });
+        }
     }
 </script>
 </body>
