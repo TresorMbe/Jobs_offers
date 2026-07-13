@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KamerJobs - Connexion Administration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --surface-dark: #151515;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #b8962e;
+            --text-light: #f8fafc;
+            --text-muted: #64748b;
+            --border-dark: #2a2a2a;
+            --error-red: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+
+        .login-container { max-width: 420px; width: 100%; }
+        
+        .brand-header { text-align: center; margin-bottom: 2rem; }
+        .brand-header .logo { font-size: 1.8rem; font-weight: 800; color: var(--accent-gold); text-decoration: none; letter-spacing: -0.03em; }
+        .brand-header p { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem; }
+
+        .card { background: var(--surface-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 2.5rem 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card h1 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: #fff; text-align: center; }
+
+        label { display: block; font-weight: 600; font-size: 0.8rem; margin-bottom: 0.5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        .input-group { position: relative; margin-bottom: 1.25rem; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 0.85rem 1rem; background: #121212; border: 1px solid var(--border-dark); border-radius: 8px; font-size: 0.95rem; color: #ffffff; outline: none; transition: border-color 0.2s; }
+        input:focus { border-color: var(--accent-gold); }
+        
+        /* Bouton Afficher le mot de passe */
+        .toggle-password { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; font-weight: 600; user-select: none; transition: color 0.2s; }
+        .toggle-password:hover { color: var(--accent-gold); }
+
+        /* Options alignées (Se souvenir de moi & mot de passe oublié) */
+        .form-options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem; font-size: 0.85rem; }
+        .remember-me { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #e2e8f0; user-select: none; }
+        .remember-me input { accent-color: var(--accent-gold); width: 15px; height: 15px; cursor: pointer; }
+        .forgot-password { color: var(--text-muted); text-decoration: none; transition: color 0.2s; font-weight: 500; }
+        .forgot-password:hover { color: var(--accent-gold); }
+
+        .btn-gold { width: 100%; padding: 0.85rem; background: var(--accent-gold); color: #000000; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
+        .btn-gold:hover { background: var(--accent-gold-hover); }
+
+        .error-message { display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: var(--error-red); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1.25rem; text-align: center; font-weight: 500; }
+        
+        .footer-back { text-align: center; margin-top: 2rem; font-size: 0.85rem; }
+        .footer-back a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .footer-back a:hover { color: var(--accent-gold); }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="brand-header">
+        <a href="#" class="logo">Kamer<span style="color:#ffffff;">Jobs</span></a>
+        <p>Espace d'administration et de gestion des talents</p>
+    </div>
+
+    <div class="card">
+        <h1>Connexion Secrétariat</h1>
+        
+        <div class="error-message" id="errorMessage">Identifiants incorrects. Veuillez réessayer.</div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <label for="username">Identifiant unique</label>
+            <div class="input-group">
+                <input type="text" id="username" required placeholder="Ex: admin_tresor" autocomplete="username">
+            </div>
+
+            <label for="password">Mot de passe</label>
+            <div class="input-group" style="margin-bottom: 0;">
+                <input type="password" id="password" required placeholder="••••••••••••" autocomplete="current-password">
+                <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">Afficher</button>
+            </div>
+
+            <div class="form-options" style="margin-top: 1.25rem;">
+                <label class="remember-me">
+                    <input type="checkbox" id="rememberMe">
+                    <span>Se souvenir de moi</span>
+                </label>
+                <a href="#" class="forgot-password" onclick="alert('Contactez l\'administrateur système pour réinitialiser vos accès.')">Mot de passe oublié ?</a>
+            </div>
+
+            <button type="submit" class="btn-gold">Se connecter de manière sécurisée</button>
+        </form>
+    </div>
+
+    <div class="footer-back">
+        <a href="index.html">← Retour au portail public</a>
+    </div>
+</div>
+
+<script>
+    // Configuration temporaire des identifiants d'accès d'administration (à adapter ou lier avec ton Apps Script)
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "KamerJobs2026"; 
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Pré-remplit l'identifiant si "Se souvenir de moi" était coché
+        const savedUser = localStorage.getItem("rememberedUser");
+        if (savedUser) {
+            document.getElementById("username").value = savedUser;
+            document.getElementById("rememberMe").checked = true;
+        }
+    });
+
+    // Fonction de visibilité du mot de passe
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById("password");
+        const toggleBtn = document.querySelector(".toggle-password");
+        
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleBtn.textContent = "Masquer";
+        } else {
+            passwordInput.type = "password";
+            toggleBtn.textContent = "Afficher";
+        }
+    }
+
+    // Gestion de la soumission du formulaire
+    function handleLogin(event) {
+        event.preventDefault();
+        
+        const userField = document.getElementById("username").value.trim();
+        const passField = document.getElementById("password").value;
+        const rememberMeChecked = document.getElementById("rememberMe").checked;
+        const errorDiv = document.getElementById("errorMessage");
+
+        // Simulation de validation stricte
+        if (userField === ADMIN_USER && passField === ADMIN_PASS) {
+            errorDiv.style.display = "none";
+            
+            // Gestion de l'option "Se souvenir de moi"
+            if (rememberMeChecked) {
+                localStorage.setItem("rememberedUser", userField);
+            } else {
+                localStorage.removeItem("rememberedUser");
+            }
+
+            // Génération d'une session temporaire locale
+            sessionStorage.setItem("isAdminAuthenticated", "true");
+            
+            // Redirection vers ton fichier d'administration unique
+            window.location.href = "admin.html";
+        } else {
+            // Affichage propre du message d'erreur
+            errorDiv.style.display = "block";
+            document.getElementById("password").value = ""; // Reset du champ MDP
+        }
+    }
+</script>
+</body>
+</html>
