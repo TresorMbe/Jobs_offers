@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobs Offers - Administration Élite</title>
+    <title>Jobs Offers - Elite Administration</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -77,7 +77,7 @@
 
 <!-- MOBILE HEADER -->
 <div class="mobile-header">
-    <div class="brand" id="mobileBrand">Jobs <span>Offers</span> — Offres</div>
+    <div class="brand" id="mobileBrand">Jobs <span>Offers</span> — Offers</div>
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
 </div>
 
@@ -85,10 +85,10 @@
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">Jobs <span>Offers</span></div>
     <ul class="sidebar-menu">
-        <li><div class="menu-item active" id="link-offres" onclick="switchTab('offres')">💼 Offres</div></li>
-        <li><div class="menu-item" id="link-candidatures" onclick="switchTab('candidatures')">📁 Candidatures</div></li>
+        <li><div class="menu-item active" id="link-offres" onclick="switchTab('offres')">💼 Offers</div></li>
+        <li><div class="menu-item" id="link-candidatures" onclick="switchTab('candidatures')">📁 Applications</div></li>
         <li><div class="menu-item" id="link-newsletter" onclick="switchTab('newsletter')">✉️ Newsletter</div></li>
-        <li><div class="menu-item logout" onclick="handleLogout()">↪ Déconnexion</div></li>
+        <li><div class="menu-item logout" onclick="handleLogout()">↪ Log Out</div></li>
     </ul>
 </nav>
 
@@ -99,54 +99,54 @@
     <section id="section-offres" class="page-section active">
         <div class="page-title-block">
             <div>
-                <h1>Gestion des Offres d'Emploi</h1>
-                <p style="font-size: 0.85rem; color:#64748b; margin-top: 0.25rem;">Publiez de nouveaux postes ou archivez les anciennes annonces.</p>
+                <h1>Job Offers Management</h1>
+                <p style="font-size: 0.85rem; color:#64748b; margin-top: 0.25rem;">Publish new positions or archive old listings.</p>
             </div>
         </div>
 
         <div class="card">
-            <h2 style="font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--accent-orange);">Créer une nouvelle offre</h2>
+            <h2 style="font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--accent-orange);">Create a New Offer</h2>
             <form id="addJobForm">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
                     <div>
-                        <label>Intitulé du Poste</label>
-                        <input type="text" id="jobTitle" required placeholder="Ex: Développeur Full-Stack React">
+                        <label>Job Title</label>
+                        <input type="text" id="jobTitle" required placeholder="E.g., Full-Stack React Developer">
                     </div>
                     <div>
-                        <label>Entreprise / Organisation</label>
-                        <input type="text" id="jobCompany" required placeholder="Ex: GEDCOOP">
+                        <label>Company / Organization</label>
+                        <input type="text" id="jobCompany" required placeholder="E.g., GEDCOOP">
                     </div>
                     <div>
-                        <label>Lieu d'affectation</label>
-                        <input type="text" id="jobLocation" required placeholder="Ex: Douala">
+                        <label>Job Location</label>
+                        <input type="text" id="jobLocation" required placeholder="E.g., Douala">
                     </div>
                     <div>
-                        <label>Type de Contrat</label>
+                        <label>Contract Type</label>
                         <select id="jobType">
                             <option>CDI</option><option>CDD</option><option>Freelance</option><option>Stage</option>
                         </select>
                     </div>
                 </div>
-                <label>Description abrégée des exigences</label>
-                <textarea id="jobDesc" rows="3" required placeholder="Compétences recherchées, missions principales..."></textarea>
-                <button type="button" class="btn-orange" onclick="publishJob()">Publier l'offre d'emploi</button>
+                <label>Short Description of Requirements</label>
+                <textarea id="jobDesc" rows="3" required placeholder="Required skills, main missions..."></textarea>
+                <button type="button" class="btn-orange" onclick="publishJob()">Publish Job Offer</button>
             </form>
         </div>
 
         <div class="card">
-            <h2 style="font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--accent-orange);">Offres actuellement en ligne</h2>
+            <h2 style="font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--accent-orange);">Currently Online Offers</h2>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th>Poste & Structure</th>
-                            <th>Type & Ville</th>
-                            <th>Date d'ajout</th>
+                            <th>Position & Structure</th>
+                            <th>Type & City</th>
+                            <th>Date Added</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="jobsTableBody">
-                        <tr><td colspan="4" style="color: #64748b;">Chargement des annonces...</td></tr>
+                        <tr><td colspan="4" style="color: #64748b;">Loading listings...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -157,27 +157,27 @@
     <section id="section-candidatures" class="page-section">
         <div class="page-title-block">
             <div>
-                <h1>Suivi & Archives des Candidatures</h1>
-                <p style="font-size: 0.85rem; color:#64748b; margin-top: 0.25rem;">Consultez les profils reçus et mettez à jour leur statut de traitement.</p>
+                <h1>Tracking & Archives of Applications</h1>
+                <p style="font-size: 0.85rem; color:#64748b; margin-top: 0.25rem;">Consult received profiles and update their processing status.</p>
             </div>
-            <button class="btn-green" onclick="loadCandidatures()">Actualiser</button>
+            <button class="btn-green" onclick="loadCandidatures()">Refresh</button>
         </div>
 
         <div class="card">
-            <h2 style="font-size: 1.15rem; margin-bottom: 1.25rem; font-weight: 700; color: var(--accent-orange);">Dossiers Enregistrés</h2>
+            <h2 style="font-size: 1.15rem; margin-bottom: 1.25rem; font-weight: 700; color: var(--accent-orange);">Registered Files</h2>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th>Candidat</th>
-                            <th>Poste Visé</th>
-                            <th>Expérience</th>
-                            <th>Date Soumission</th>
-                            <th>Statut / Action</th>
+                            <th>Candidate</th>
+                            <th>Targeted Position</th>
+                            <th>Experience</th>
+                            <th>Submission Date</th>
+                            <th>Status / Action</th>
                         </tr>
                     </thead>
                     <tbody id="globalAppsBody">
-                        <tr><td colspan="5" style="color: #64748b;">Chargement de la base d'archives...</td></tr>
+                        <tr><td colspan="5" style="color: #64748b;">Loading archive database...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -188,25 +188,25 @@
     <section id="section-newsletter" class="page-section">
         <div class="page-title-block">
             <div>
-                <h1>Gestion des Abonnés à la Newsletter</h1>
-                <p style="font-size: 0.85rem; color:#64748b; margin-top: 0.25rem;">Visualisez la base de données des emails abonnés et gérez les listes.</p>
+                <h1>Newsletter Subscribers Management</h1>
+                <p style="font-size: 0.85rem; color:#64748b; margin-top: 0.25rem;">View the database of subscribed emails and manage the lists.</p>
             </div>
-            <button class="btn-green" onclick="loadNewsletter()">Actualiser</button>
+            <button class="btn-green" onclick="loadNewsletter()">Refresh</button>
         </div>
 
         <div class="card">
-            <h2 style="font-size: 1.15rem; margin-bottom: 1.25rem; font-weight: 700; color: var(--accent-orange);">Emails Enregistrés</h2>
+            <h2 style="font-size: 1.15rem; margin-bottom: 1.25rem; font-weight: 700; color: var(--accent-orange);">Registered Emails</h2>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th>Adresse Email</th>
-                            <th>Date d'inscription</th>
+                            <th>Email Address</th>
+                            <th>Registration Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="newsletterTableBody">
-                        <tr><td colspan="3" style="color: #64748b;">Chargement des abonnés...</td></tr>
+                        <tr><td colspan="3" style="color: #64748b;">Loading subscribers...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -243,8 +243,8 @@
         document.getElementById(`section-${tabName}`).classList.add('active');
         document.getElementById(`link-${tabName}`).classList.add('active');
         
-        let displayTabName = 'Offres';
-        if(tabName === 'candidatures') displayTabName = 'Candidatures';
+        let displayTabName = 'Offers';
+        if(tabName === 'candidatures') displayTabName = 'Applications';
         if(tabName === 'newsletter') displayTabName = 'Newsletter';
         
         document.getElementById('mobileBrand').innerHTML = `Jobs <span>Offers</span> — ${displayTabName}`;
@@ -257,18 +257,18 @@
         .then(r => r.json())
         .then(data => {
             const tbody = document.getElementById('jobsTableBody');
-            if(!data || !data.length) { tbody.innerHTML = "<tr><td colspan='4' style='color:#64748b;'>Aucune offre publiée pour le moment.</td></tr>"; return; }
+            if(!data || !data.length) { tbody.innerHTML = "<tr><td colspan='4' style='color:#64748b;'>No offers published yet.</td></tr>"; return; }
             tbody.innerHTML = data.map(job => `
                 <tr>
                     <td><strong>${job.title}</strong><br><span style="font-size:0.8rem;color:#64748b;">${job.company}</span></td>
                     <td>${job.type} / ${job.location}</td>
-                    <td>${job.date || 'Récemment'}</td>
-                    <td><button class="btn-danger" onclick="archiveJob('${job.id}')">Supprimer</button></td>
+                    <td>${job.date || 'Recently'}</td>
+                    <td><button class="btn-danger" onclick="archiveJob('${job.id}')">Delete</button></td>
                 </tr>
             `).join('');
         })
         .catch(err => {
-            document.getElementById('jobsTableBody').innerHTML = "<tr><td colspan='4' style='color:#ef4444;'>Erreur de chargement des offres.</td></tr>";
+            document.getElementById('jobsTableBody').innerHTML = "<tr><td colspan='4' style='color:#ef4444;'>Error loading offers.</td></tr>";
         });
     }
 
@@ -287,7 +287,7 @@
         .then(r => r.json())
         .then(data => {
             if(data.success) { 
-                alert("L'offre a bien été publiée sur Jobs Offers !"); 
+                alert("The offer has been successfully published on Jobs Offers!"); 
                 document.getElementById('addJobForm').reset(); 
                 loadJobsTable(); 
             }
@@ -295,7 +295,7 @@
     }
 
     function archiveJob(id) {
-        if(!confirm("Voulez-vous vraiment retirer et supprimer cette offre définitivement ?")) return;
+        if(!confirm("Do you really want to withdraw and delete this offer permanently?")) return;
         fetch(API_URL, { 
             method: 'POST', 
             body: JSON.stringify({ action: "deleteJob", token: token, id: id }) 
@@ -305,7 +305,7 @@
             if(data.success) { 
                 loadJobsTable(); 
             } else {
-                alert("Erreur lors de la suppression.");
+                alert("Error during deletion.");
             }
         });
     }
@@ -316,27 +316,27 @@
         .then(r => r.json())
         .then(data => {
             const tbody = document.getElementById('globalAppsBody');
-            if(!data || !data.length) { tbody.innerHTML = "<tr><td colspan='5' style='color:#64748b;'>Aucun dossier enregistré dans les archives.</td></tr>"; return; }
+            if(!data || !data.length) { tbody.innerHTML = "<tr><td colspan='5' style='color:#64748b;'>No files registered in the archives.</td></tr>"; return; }
             
             tbody.innerHTML = data.map(app => `
                 <tr>
                     <td><strong>${app.candidateName}</strong><br><span style="font-size:0.75rem;color:#64748b;">📞 ${app.phone}</span></td>
                     <td><span style="font-weight:600;color:var(--accent-orange);">${app.jobTitle}</span><br><small style="color:#64748b;">ID: ${app.id}</small></td>
-                    <td>${app.exp} ans</td>
+                    <td>${app.exp} years</td>
                     <td>${app.date || '—'}</td>
                     <td>
                         <select onchange="changeStatus('${app.id}', this.value)" style="margin-bottom:0; padding: 0.4rem; background:#1c1c1c; border-color:#333;">
-                            <option value="En attente" ${app.status === 'En attente' ? 'selected' : ''}>⏳ En attente</option>
-                            <option value="Vu" ${app.status === 'Vu' ? 'selected' : ''}>👀 Vu</option>
-                            <option value="Entretien" ${app.status === 'Entretien' ? 'selected' : ''}>📅 Entretien</option>
-                            <option value="Rejeté" ${app.status === 'Rejeté' ? 'selected' : ''}>❌ Rejeté</option>
+                            <option value="En attente" ${app.status === 'En attente' ? 'selected' : ''}>⏳ Pending</option>
+                            <option value="Vu" ${app.status === 'Vu' ? 'selected' : ''}>👀 Viewed</option>
+                            <option value="Entretien" ${app.status === 'Entretien' ? 'selected' : ''}>📅 Interview</option>
+                            <option value="Rejeté" ${app.status === 'Rejeté' ? 'selected' : ''}>❌ Rejected</option>
                         </select>
                     </td>
                 </tr>
             `).join('');
         })
         .catch(err => {
-            document.getElementById('globalAppsBody').innerHTML = "<tr><td colspan='5' style='color:#ef4444;'>Erreur de chargement des candidatures.</td></tr>";
+            document.getElementById('globalAppsBody').innerHTML = "<tr><td colspan='5' style='color:#ef4444;'>Error loading applications.</td></tr>";
         });
     }
 
@@ -347,7 +347,7 @@
         })
         .then(r => r.json())
         .then(data => {
-            if(data.success) { console.log(`Statut de ${appId} mis à jour : ${newStatus}`); }
+            if(data.success) { console.log(`Status of ${appId} updated: ${newStatus}`); }
         });
     }
 
@@ -357,25 +357,25 @@
         .then(r => r.json())
         .then(data => {
             const tbody = document.getElementById('newsletterTableBody');
-            if(!data || !data.length) { tbody.innerHTML = "<tr><td colspan='3' style='color:#64748b;'>Aucun abonné enregistré.</td></tr>"; return; }
+            if(!data || !data.length) { tbody.innerHTML = "<tr><td colspan='3' style='color:#64748b;'>No subscribers registered.</td></tr>"; return; }
             
             tbody.innerHTML = data.map(sub => `
                 <tr>
                     <td><strong>${sub.email}</strong></td>
                     <td>${sub.date || '—'}</td>
                     <td>
-                        <button class="btn-danger" onclick="deleteSubscriber('${sub.email}')">Supprimer</button>
+                        <button class="btn-danger" onclick="deleteSubscriber('${sub.email}')">Delete</button>
                     </td>
                 </tr>
             `).join('');
         })
         .catch(err => {
-            document.getElementById('newsletterTableBody').innerHTML = "<tr><td colspan='3' style='color:#ef4444;'>Erreur de chargement de la newsletter.</td></tr>";
+            document.getElementById('newsletterTableBody').innerHTML = "<tr><td colspan='3' style='color:#ef4444;'>Error loading newsletter.</td></tr>";
         });
     }
 
     function deleteSubscriber(email) {
-        if(!confirm(`Voulez-vous vraiment désabonner et supprimer ${email} de la newsletter ?`)) return;
+        if(!confirm(`Do you really want to unsubscribe and remove ${email} from the newsletter?`)) return;
         fetch(API_URL, {
             method: 'POST',
             body: JSON.stringify({ action: "deleteSubscriber", token: token, email: email })
@@ -385,14 +385,14 @@
             if(data.success) {
                 loadNewsletter();
             } else {
-                alert("Erreur lors de la désinscription.");
+                alert("Error during unsubscription.");
             }
         });
     }
 
     /* DÉCONNEXION */
     function handleLogout() {
-        if(confirm("Confirmez-vous votre déconnexion de l'espace d'administration Jobs Offers ?")) {
+        if(confirm("Do you confirm your disconnection from the Jobs Offers administration space?")) {
             sessionStorage.clear();
             window.location.href = "login.html"; 
         }
