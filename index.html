@@ -3,320 +3,796 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KamerJobs - Portail Emploi Premium</title>
+    <title>JobsOffers - Portail Emploi au Cameroun</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #121212;
-            --surface-dark: #1e1e1e;
-            --accent-gold: #d4af37;
-            --accent-gold-hover: #b8962e;
-            --text-light: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-dark: #2a2a2a;
+            --primary-green: #07442c;
+            --primary-green-hover: #0a5c3c;
+            --accent-orange: #e58a13;
+            --accent-red: #c0392b;
+            --accent-red-hover: #a93226;
+            --bg-light: #f4f6f8;
+            --border-color: #e2e8f0;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
         }
+        
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: #0a0a0a; color: var(--text-light); min-height: 100vh; display: flex; flex-direction: column; scroll-behavior: smooth; }
+        body { background-color: var(--bg-light); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* BARRE DE NAVIGATION UNIQUE (Vert Foncé) */
+        nav { background: var(--primary-green); color: #ffffff; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--accent-orange); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 1rem; }
         
-        /* HEADER PRO & PREMIUM */
-        header { background: var(--bg-dark); border-bottom: 1px solid var(--border-dark); position: sticky; top: 0; z-index: 100; }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; position: relative; }
-        .logo { font-size: 1.4rem; font-weight: 800; color: var(--accent-gold); text-decoration: none; letter-spacing: -0.03em; }
+        /* Conteneur Logo + Nom de la Marque */
+        .brand-wrapper { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; padding: 0.7rem 0; }
+        .brand-logo-img { height: 40px; width: auto; object-fit: contain; }
+        .brand-text { font-size: 1.4rem; font-weight: 800; color: #ffffff; letter-spacing: -0.03em; }
+        .brand-text span { color: var(--accent-orange); }
+
+        .nav-links { display: flex; list-style: none; align-items: center; }
+        .nav-links li a { display: block; padding: 1.2rem 1.1rem; color: #ffffff; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
+        .nav-links li a:hover, .nav-links li.active a { background: rgba(255, 255, 255, 0.1); color: #ffd166; }
         
-        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-        .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--accent-gold); }
+        .menu-toggle { display: none; background: transparent; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; padding: 1rem; }
 
-        /* MENU HAMBURGER MOBILE */
-        .menu-toggle { display: none; background: transparent; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+        /* MOTEUR DE RECHERCHE */
+        .search-section { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 1.5rem 1rem; }
+        .search-container { max-width: 1200px; margin: 0 auto; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+        .search-input { flex: 2; min-width: 250px; }
+        .search-select { flex: 1; min-width: 180px; }
+        .search-container input, .search-container select { width: 100%; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; outline: none; background: #fff; }
+        .search-container input:focus, .search-container select:focus { border-color: var(--primary-green); }
+        
+        .btn { padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .btn-search { background: #7f8c8d; color: white; }
+        .btn-search:hover { background: #95a5a6; }
+        .btn-cv { background: var(--accent-red); color: white; }
+        .btn-cv:hover { background: var(--accent-red-hover); }
+        .btn-secondary { background: #e2e8f0; color: var(--text-dark); }
+        .btn-secondary:hover { background: #cbd5e1; }
 
-        /* HERO SECTION */
-        .hero-section { background: linear-gradient(180deg, #121212 0%, #0a0a0a 100%); text-align: center; padding: 4rem 1.5rem 2.5rem; border-bottom: 1px solid var(--border-dark); }
-        .hero-section h1 { font-size: 2.4rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
-        .hero-section h1 span { color: var(--accent-gold); }
-        .hero-section p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        /* GRILLE PRINCIPALE (Deux Colonnes) */
+        main { flex: 1; max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; display: grid; grid-template-columns: 7fr 3fr; gap: 2rem; }
 
-        /* MAIN CONTENT */
-        main { flex: 1; max-width: 900px; width: 100%; margin: 2rem auto; padding: 0 1rem; }
-        .card { background: var(--surface-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
-        .card h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 1.5rem; border-left: 4px solid var(--accent-gold); padding-left: 0.75rem; }
-
-        /* PRÉSENTATION DE L'ENTREPRISE */
-        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
-        .about-stat { background: #121212; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-dark); text-align: center; }
-        .about-stat .num { font-size: 1.5rem; font-weight: 800; color: var(--accent-gold); }
-        .about-stat .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+        /* ONGLETS DE FILTRAGE DES OFFRES */
+        .tabs-container { display: flex; border-bottom: 2px solid var(--primary-green); margin-bottom: 1rem; background: #fff; border-top-left-radius: 8px; border-top-right-radius: 8px; overflow: hidden; }
+        .tab-btn { flex: 1; padding: 1rem; border: none; background: #f8fafc; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .tab-btn span.badge { background: #cbd5e1; color: #475569; padding: 0.15rem 0.4rem; border-radius: 12px; font-size: 0.75rem; }
+        .tab-btn.active { background: var(--primary-green); color: #ffffff; }
+        .tab-btn.active span.badge { background: rgba(255,255,255,0.25); color: #ffffff; }
 
         /* LISTE DES OFFRES */
-        .job-row { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--border-dark); }
-        .job-row:last-child { border: none; }
-        .job-title { font-weight: 700; color: #ffffff; font-size: 1.1rem; }
-        .job-meta { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; }
-        .job-meta span { color: var(--accent-gold); font-weight: 600; }
+        .jobs-list-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; }
+        .job-card { display: flex; gap: 1.25rem; padding: 1.5rem 1rem; border-bottom: 1px solid var(--border-color); align-items: flex-start; }
+        .job-card:last-child { border-bottom: none; }
+        .job-details { flex: 1; }
+        .job-title-link { font-size: 1.1rem; font-weight: 700; color: #1e3a8a; text-decoration: none; display: block; margin-bottom: 0.35rem; transition: color 0.2s; }
+        .job-title-link:hover { color: var(--accent-orange); }
+        .job-card-meta { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+        .job-card-meta strong { color: var(--primary-green); }
+        .job-card-meta span.tag-sector { background: #f1f5f9; color: var(--text-dark); padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; border: 1px solid #e2e8f0; display: inline-block; margin-top: 0.5rem; }
 
-        /* BOUTONS */
-        .btn { padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; border: none; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; }
-        .btn-primary { background: var(--accent-gold); color: #000000; }
-        .btn-primary:hover { background: var(--accent-gold-hover); }
-        .btn-secondary { background: transparent; border: 1px solid var(--border-dark); color: var(--text-light); }
-        .btn-secondary:hover { background: var(--border-dark); }
+        /* FICHE DÉTAIL D'UNE OFFRE */
+        .job-detail-header { border-bottom: 2px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+        .job-detail-title { font-size: 1.6rem; font-weight: 800; color: var(--primary-green); margin-bottom: 0.5rem; }
+        .job-detail-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; font-size: 0.9rem; }
+        .job-detail-info-item { background: #f8fafc; padding: 0.75rem; border-radius: 6px; border-left: 3px solid var(--accent-orange); }
+        .job-detail-body { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 2rem; }
+        .job-detail-body h4 { font-size: 1.1rem; color: var(--primary-green); margin: 1.5rem 0 0.5rem; }
+        .job-detail-body p { margin-bottom: 1rem; }
+
+        /* GRILLE DE L'ONGLET EMPLOYEURS */
+        .employers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+        .employer-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem 1rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: box-shadow 0.2s; cursor: pointer; text-decoration: none; min-height: 180px; }
+        .employer-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: var(--accent-orange); }
+        .employer-logo-wrap { width: 100px; height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+        .employer-logo-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .employer-name-link { font-size: 0.85rem; font-weight: 700; color: #208068; text-decoration: none; line-height: 1.3; }
+        .employer-name-link:hover { color: var(--accent-orange); }
+
+        /* SINGLE COMPANY PAGE */
+        .company-header-banner { display: flex; align-items: center; gap: 1.5rem; background: #eaedf1; border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
+        .company-banner-logo { background: #ffffff; padding: 0.75rem; border-radius: 6px; width: 110px; height: 75px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .company-banner-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .company-banner-title { font-size: 1.5rem; font-weight: 800; color: #1e293b; }
+        
+        .company-annonces-title { font-size: 1.8rem; font-weight: 700; text-align: center; margin: 2rem 0 1.5rem; color: #1e293b; position: relative; }
+        
+        .comp-annonces-container { display: flex; flex-direction: column; gap: 1rem; }
+        .comp-job-card { border-bottom: 1px solid #cbd5e1; padding-bottom: 1.5rem; margin-bottom: 0.5rem; }
+        .comp-job-card:last-child { border-bottom: none; }
+        .comp-job-link { font-size: 1.15rem; font-weight: 700; color: #2a8a70; text-decoration: none; margin-bottom: 0.5rem; display: inline-block; }
+        .comp-job-link:hover { text-decoration: underline; }
+        .comp-job-meta { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+
+        /* DESIGN DE LA PAGE À PROPOS */
+        .about-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 2.5rem; color: var(--text-dark); }
+        .about-banner { background: linear-gradient(135deg, var(--primary-green), #0a5c3c); color: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; text-align: center; }
+        .about-banner h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+        .about-banner p { color: #ffd166; font-size: 0.95rem; font-weight: 600; }
+        .about-text { font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 2rem; text-align: justify; }
+        .about-partners { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0 2.5rem; }
+        .partner-box { background: #f8fafc; border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 6px; border-top: 3px solid var(--accent-orange); }
+        .partner-box strong { color: var(--primary-green); font-size: 1rem; display: block; margin-bottom: 0.5rem; }
+        .partner-box a { color: #208068; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+        .partner-box a:hover { text-decoration: underline; }
+        .section-title-about { font-size: 1.3rem; font-weight: 800; color: var(--primary-green); margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; text-transform: uppercase; }
+        .about-grid-benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .benefit-card { background: #fff; border: 1px dashed #cbd5e1; padding: 1.25rem; border-radius: 6px; }
+        .benefit-card h4 { color: var(--accent-orange); font-size: 1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .mission-highlight { background: #f0f7f4; border-left: 4px solid var(--primary-green); padding: 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; margin-bottom: 1.5rem; line-height: 1.6; }
+
+        /* SECTION FAQ / AIDE PREMIUM ACCORDÉON */
+        .faq-section-title { font-size: 1.5rem; font-weight: 800; color: var(--primary-green); margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; }
+        .faq-container { display: flex; flex-direction: column; gap: 1rem; }
+        .faq-item { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .faq-item:hover { border-color: var(--accent-orange); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .faq-trigger { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; background: #ffffff; border: none; text-align: left; font-size: 0.95rem; font-weight: 700; color: var(--text-dark); cursor: pointer; transition: background 0.2s; }
+        .faq-trigger:hover { background: #f8fafc; }
+        .faq-trigger::after { content: '＋'; font-size: 1.1rem; color: var(--accent-orange); transition: transform 0.3s; font-weight: bold; }
+        .faq-item.active .faq-trigger::after { content: '－'; }
+        .faq-item.active { border-left: 4px solid var(--primary-green); }
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #f8fafc; }
+        .faq-content-inner { padding: 1.25rem 1.5rem; font-size: 0.9rem; line-height: 1.7; color: #475569; border-top: 1px solid var(--border-color); }
+        .faq-content-inner strong { color: var(--primary-green); }
+        .faq-content-inner ul { margin-left: 1.25rem; margin-top: 0.5rem; }
+        .faq-content-inner li { margin-bottom: 0.35rem; }
 
         /* FORMULAIRE EN ÉTAPES */
+        .form-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 2rem; }
+        .form-card h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 1.5rem; border-left: 4px solid var(--accent-orange); padding-left: 0.75rem; color: var(--primary-green); }
+        .progress-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+        .progress-step.active { color: var(--accent-orange); }
         .step-container { display: none; }
         .step-container.active { display: block; }
-        .progress-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); border-bottom: 1px solid var(--border-dark); padding-bottom: 1rem; }
-        .progress-step.active { color: var(--accent-gold); }
-        
         label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-muted); }
-        input, select, textarea { width: 100%; padding: 0.8rem; background: #121212; border: 1px solid var(--border-dark); border-radius: 8px; margin-bottom: 1.25rem; font-size: 0.9rem; color: #ffffff; outline: none; }
-        input:focus, select:focus, textarea:focus { border-color: var(--accent-gold); }
+        .form-card input, .form-card select, .form-card textarea { width: 100%; padding: 0.8rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 1.25rem; font-size: 0.9rem; color: var(--text-dark); outline: none; }
+        
+        /* COLONNE DROITE */
+        .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .widget-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; }
+        .widget-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--primary-green); border-bottom: 2px solid #cbd5e1; padding-bottom: 0.5rem; }
+        .newsletter-form label { font-size: 0.8rem; margin-bottom: 0.25rem; }
+        .newsletter-form input { width: 100%; padding: 0.77rem; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 1rem; background: #fff; }
+        .btn-newsletter { width: 100%; background: #208068; color: white; padding: 0.75rem; border-radius: 4px; font-weight: 700; font-size: 0.85rem; transition: background 0.2s; }
+        .btn-newsletter:hover { background: #1a6955; }
+        .btn-newsletter:disabled { background: #a0aec0; cursor: not-allowed; }
 
-        /* STATUTS BADGES */
-        .status-badge { padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        .status-en-attente { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-        .status-vu { background: rgba(79, 70, 229, 0.15); color: #818cf8; }
-        .status-entretien { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-        .status-rejeté { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-
-        /* FOOTER PROFESSIONNEL ET COMPLET */
-        footer { background: var(--bg-dark); border-top: 1px solid var(--border-dark); color: var(--text-muted); font-size: 0.85rem; margin-top: auto; }
+        /* FOOTER */
+        footer { background: #0c1e3d; border-top: 3px solid var(--accent-orange); color: #cbd5e1; font-size: 0.85rem; margin-top: auto; }
         .footer-top { max-width: 1200px; margin: 0 auto; padding: 3.5rem 1.5rem 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem; }
-        .footer-column h4 { color: #ffffff; font-size: 0.95rem; font-weight: 700; margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .footer-column p { line-height: 1.6; font-size: 0.85rem; }
+        .footer-column h4 { color: #ffffff; font-size: 0.95rem; font-weight: 700; margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.05em; border-left: 3px solid var(--accent-orange); padding-left: 0.5rem; }
         .footer-column ul { list-style: none; }
         .footer-column ul li { margin-bottom: 0.75rem; }
-        .footer-column ul li a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-        .footer-column ul li a:hover { color: var(--accent-gold); }
-        
-        .footer-bottom { max-width: 1200px; margin: 0 auto; padding: 1.5rem; border-top: 1px solid var(--border-dark); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; }
+        .footer-column ul li a { color: #cbd5e1; text-decoration: none; }
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; }
 
-        /* RESPONSIVE DESIGN */
+        @media (max-width: 992px) { main { grid-template-columns: 1fr; } .about-partners, .about-grid-benefits { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
-            .nav-links { display: none; flex-direction: column; width: 100%; position: absolute; top: 100%; left: 0; background: var(--bg-dark); border-bottom: 1px solid var(--border-dark); padding: 1rem 1.5rem; gap: 1rem; align-items: flex-start; }
+            .nav-links { display: none; flex-direction: column; width: 100%; background: var(--primary-green); }
             .nav-links.open { display: flex; }
-            .hero-section h1 { font-size: 1.8rem; }
+            .nav-links li { width: 100%; }
+            .nav-links li a { padding: 1rem 1.5rem; }
             .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-<header>
+<!-- HEADER PRINCIPAL UNIQUE AVEC MARQUE INTEGRÉE -->
+<nav>
     <div class="nav-container">
-        <a href="#" class="logo">Kamer<span style="color:#ffffff;">Jobs</span></a>
+        <a href="#" class="brand-wrapper" onclick="scrollToJobs(event)">
+            <img src="logo.png" alt="Logo" class="brand-logo-img" onerror="this.style.display='none'">
+            <div class="brand-text">Jobs<span>Offers</span></div>
+        </a>
         <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-        <nav class="nav-links" id="navLinks">
-            <!-- Redirection et focus ciblé vers la liste des postes -->
-            <a href="#" onclick="scrollToJobs(event)">Offres</a>
-            <a href="#" onclick="showTrackingSection()">Suivi Candidature</a>
-        </nav>
+        <ul class="nav-links" id="navLinks">
+            <li class="active" id="nav-accueil"><a href="#" onclick="scrollToJobs(event)">Accueil</a></li>
+            <li id="nav-employeurs"><a href="#" onclick="showEmployersSection(event)">Employeurs</a></li>
+            <li id="nav-about"><a href="#" onclick="showAboutSection(event)">À propos</a></li>
+            <li id="nav-help"><a href="#" onclick="showHelpSection(event)">Aide / FAQ</a></li>
+            <li><a href="#" onclick="showTrackingSection()">Suivi Candidature</a></li>
+        </ul>
     </div>
-</header>
+</nav>
 
-<section class="hero-section" id="heroArea">
-    <h1>Propulsez Votre Carrière Au <span>Cameroun</span></h1>
-    <p>Accédez en toute exclusivité aux offres d'emploi et opportunités les plus prestigieuses du marché national.</p>
+<!-- MOTEUR DE RECHERCHE -->
+<section class="search-section">
+    <div class="search-container">
+        <div class="search-input">
+            <input type="text" id="keywordSearch" placeholder="Titre d'annonce, Nom de société...">
+        </div>
+        <div class="search-select">
+            <select id="cityFilter">
+                <option value="">- Localisation -</option>
+                <option value="Douala">Douala</option>
+                <option value="Yaoundé">Yaoundé</option>
+                <option value="Garoua">Garoua</option>
+                <option value="Bafoussam">Bafoussam</option>
+            </select>
+        </div>
+        <button class="btn btn-search" onclick="triggerSearch()">Chercher</button>
+        <button class="btn btn-cv" onclick="showTrackingSection()">✍️ Envoyer CV / Suivi</button>
+    </div>
 </section>
 
 <main>
-    <!-- SECTION PRÉSENTATION DE L'ENTREPRISE -->
-    <section id="viewAbout" class="card">
-        <h2>Qui sommes-nous ?</h2>
-        <p style="line-height: 1.6; color: var(--text-light); margin-bottom: 1.25rem;">
-            <strong>KamerJobs</strong> est le portail d'emploi premium de référence au Cameroun. Nous connectons les profils hautement qualifiés et les talents ambitieux avec les multinationales, les institutions et les entreprises locales en pleine expansion. Notre engagement est d'assurer un processus de recrutement fluide, transparent et d'élite.
-        </p>
-        <div class="about-grid">
-            <div class="about-stat">
-                <div class="num">150+</div>
-                <div class="label">Partenaires Recruteurs</div>
+    <!-- COLONNE GAUCHE -->
+    <section>
+        
+        <!-- SECTION 1 : LISTES ET ONGLETS ACCUEIL -->
+        <div id="viewList">
+            <div class="tabs-container">
+                <button class="tab-btn active" onclick="switchTab('une')"><span style="color: #ffd166;">★</span> À LA UNE <span class="badge" id="badgeUne">0</span></button>
+                <button class="tab-btn" onclick="switchTab('jobs')">JOBS <span class="badge" id="badgeJobs">0</span></button>
+                <button class="tab-btn" onclick="switchTab('stages')">STAGES <span class="badge" id="badgeStages">0</span></button>
             </div>
-            <div class="about-stat">
-                <div class="num">2026</div>
-                <div class="label">Vision & Innovation</div>
-            </div>
-            <div class="about-stat">
-                <div class="num">95%</div>
-                <div class="label">Taux de Satisfaction</div>
+            <div class="jobs-list-card">
+                <div id="jobsContainer">Chargement des opportunités...</div>
             </div>
         </div>
-    </section>
 
-    <!-- ÉCRAN 1 : OFFRES D'EMPLOI -->
-    <section id="viewList">
-        <div class="card">
-            <h2>Postes Disponibles</h2>
-            <div id="jobsContainer">Chargement des offres en cours...</div>
-        </div>
-    </section>
-
-    <!-- ÉCRAN 2 : FORMULAIRE EN ÉTAPES -->
-    <section id="viewForm" class="card" style="display: none;">
-        <div class="progress-bar">
-            <span class="progress-step active" id="p1">1. Profil</span>
-            <span class="progress-step" id="p2">2. Documents</span>
-            <span class="progress-step" id="p3">3. Expérience</span>
-            <span class="progress-step" id="p4">4. Confirmation</span>
+        <!-- SECTION 1.5 : DÉTAIL D'UNE OFFRE D'EMPLOI -->
+        <div id="viewJobDetails" class="about-card" style="display: none;">
+            <div id="jobDetailsContent"></div>
         </div>
 
-        <form id="multiStepForm">
-            <div class="step-container active" id="step1">
-                <label>Nom & Prénom</label>
-                <input type="text" id="candName" required placeholder="Ex: Trésor Mbe">
-                <label>Téléphone portable</label>
-                <input type="tel" id="candPhone" required placeholder="Ex: 690000000">
-                <label>Ville actuelle</label>
-                <select id="candCity">
-                    <option>Douala</option><option>Yaoundé</option><option>Garoua</option><option>Bafoussam</option>
-                </select>
-                <button type="button" class="btn btn-primary" onclick="nextStep(2)">Suivant</button>
+        <!-- SECTION 2 : GRILLE DES EMPLOYEURS -->
+        <div id="viewEmployers" style="display: none;">
+            <div class="employers-grid" id="employersGridContainer"></div>
+        </div>
+
+        <!-- SECTION 3 : PAGE DETAIL D'UNE ENTREPRISE -->
+        <div id="viewCompanyDetails" style="display: none;">
+            <div id="companyBannerWrapper"></div>
+            <h2 class="company-annonces-title">Les annonces</h2>
+            <div class="jobs-list-card">
+                <div id="companyAnnoncesContainer" class="comp-annonces-container"></div>
             </div>
+        </div>
 
-            <div class="step-container" id="step2">
-                <label>Lien du Curriculum Vitae (CV)</label>
-                <input type="text" id="candCV" placeholder="Lien Drive, Dropbox ou tapez OK">
-                <label>Plus haut diplôme</label>
-                <input type="text" id="candDiploma" placeholder="Ex: Licence Professionnelle, Master">
-                <div style="display: flex; gap: 0.5rem;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep(1)">Retour</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep(3)">Suivant</button>
+        <!-- SECTION 4 : PAGE À PROPOS -->
+        <div id="viewAbout" class="about-card" style="display: none;">
+            <div class="about-banner">
+                <h2>À PROPOS DE JOBSOFFERS</h2>
+                <p>Votre partenaire carrière pour le développement économique et social du Cameroun</p>
+            </div>
+            
+            <div class="about-text">
+                <p>
+                    <strong>JobsOffers</strong> est un portail carrière de premier plan conçu spécifiquement pour stimuler la croissance professionnelle au Cameroun. 
+                    Il s'agit d'un projet technologique commun et stratégique entre <strong>PeopleHop Sarl</strong>, une société de droit camerounais spécialisée de pointe en Ressources Humaines, 
+                    et <strong>J.I.R Ltd</strong>, une entreprise rwandaise leader reconnue en recrutement en ligne en Afrique de l'Est.
+                </p>
+                
+                <div class="about-partners">
+                    <div class="partner-box">
+                        <strong>L'expertise RH Locale :</strong>
+                        PeopleHop Sarl dispose d'une connaissance fine du tissu d'affaires camerounais.
+                        <br><a href="https://www.peoplehopsarl.com" target="_blank">→ Visiter PeopleHop Sarl</a>
+                    </div>
+                    <div class="partner-box">
+                        <strong>L'infrastructure Leader :</strong>
+                        J.I.R Ltd apporte sa puissance technologique éprouvée via son réseau d'excellence africain.
+                        <br><a href="https://www.jobinrwanda.com" target="_blank">→ Découvrir J.I.R Ltd</a>
+                    </div>
+                </div>
+
+                <div class="section-title-about">Une Solution Recrutement Innovante</div>
+                <p style="margin-bottom: 1rem;">
+                    Our portail propose aux employeurs bien plus que la simple possibilité d'afficher des offres d'emploi traditionnelles. 
+                    Nous présentons une <strong>solution complète de recrutement en ligne</strong>. C'est un environnement virtuel centralisé qui permet de piloter, 
+                    structurer et faire le suivi de l'intégralité de vos processus et activités de sourcing de talents à partir d'un espace unique.
+                </p>
+
+                <div class="about-grid-benefits">
+                    <div class="benefit-card">
+                        <h4>💼 Pour les Employeurs</h4>
+                        <p>Une visibilité de marque accrue, des outils d'évaluation, la centralisation des CVs reçus, ainsi qu'une vitrine sur-mesure pour promouvoir votre culture d'entreprise, vos rémunérations et avantages sociaux.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>🎓 Pour les Chercheurs d'Emploi</h4>
+                        <p>Un accès 100% gratuit à un réseau permanent d'opportunités fiables. Des outils d'aiguillage performants pour faire progresser durablement votre plan de carrière au Cameroun.</p>
+                    </div>
+                </div>
+
+                <div class="section-title-about">Notre Mission</div>
+                <div class="mission-highlight">
+                    "Notre mission absolue est de vous aider à tirer le meilleur parti de votre vie professionnelle. Que ce soit pour décrocher le poste idéal, obtenir des conseils de gestion de carrière précis, dénicher le profil parfait ou accroître la notoriété de votre entreprise, nous mettons à votre service un vaste éventail d'outils digitaux efficaces."
+                </div>
+
+                <p>
+                    Le défi majeur actuel dans l'univers du recrutement n'est pas simplement de collecter des candidatures en masse, mais de filtrer et d'identifier **d'excellent candidats**. 
+                    C’est pourquoi <strong>JobsOffers</strong> préconise une approche rigoureusement ciblée : connecter les professionnels selon leur secteur strict, leurs compétences transversales et leurs années d'expérience. 
+                    Nous garantissent à chaque entreprise un service partenarial à haute valeur ajoutée.
+                </p>
+            </div>
+        </div>
+
+        <!-- SECTION FAQ (AIDE) -->
+        <div id="viewHelp" class="about-card" style="display: none;">
+            <div class="about-banner">
+                <h2>CENTRE D'AIDE & FAQ</h2>
+                <p>Trouvez rapidement des réponses à toutes vos questions d'utilisation</p>
+            </div>
+            
+            <h3 class="faq-section-title">Foire aux questions</h3>
+            <div class="faq-container">
+                <!-- Question 1 -->
+                <div class="faq-item">
+                    <button class="faq-trigger" onclick="toggleFaq(this)">Comment postuler à une offre d'emploi ?</button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            C'est très simple ! <br>
+                            1. Parcourez les offres sur notre page d'accueil ou recherchez-les à l'aide de la barre de recherche. <br>
+                            2. Cliquez sur l'offre qui vous intéresse pour voir tous les détails du poste. <br>
+                            3. Cliquez sur le bouton <strong>"Postuler à cette offre"</strong>. <br>
+                            4. Remplissez le formulaire de candidature intuitif en 4 étapes simples et validez votre dossier.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="faq-item">
+                    <button class="faq-trigger" onclick="toggleFaq(this)">Les services de JobsOffers sont-ils payants ?</button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            Non, pour les candidats, l'accès à notre plateforme ainsi que le dépôt de candidature sont <strong>100% gratuits</strong>. Les opportunités professionnelles publiées sont accessibles à tous sans aucun frais caché.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="faq-item">
+                    <button class="faq-trigger" onclick="toggleFaq(this)">Comment fonctionne le suivi de candidature ?</button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            Vous pouvez suivre en temps réel l'évolution de vos dossiers. <br>
+                            Cliquez sur le bouton <strong>"Suivi Candidature"</strong> (dans le menu ou à côté du moteur de recherche), saisissez le numéro de téléphone que vous avez utilisé pour postuler, et vous obtiendrez instantanément la liste de vos candidatures ainsi que leur statut actuel (En cours, Retenu, etc.).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="faq-item">
+                    <button class="faq-trigger" onclick="toggleFaq(this)">Je suis recruteur, comment publier une offre ?</button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            Pour le moment, l'espace d'auto-publication direct est réservé. Si vous souhaitez diffuser une offre d'emploi ou de stage sur <strong>JobsOffers</strong>, veuillez contacter notre équipe d'assistance par e-mail à l'adresse <strong>contact@jobsoffers.cm</strong>. Nous configurerons votre espace partenaire sur-mesure.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="faq-item">
+                    <button class="faq-trigger" onclick="toggleFaq(this)">Puis-je modifier ma candidature après envoi ?</button>
+                    <div class="faq-content">
+                        <div class="faq-content-inner">
+                            Une fois envoyée, une candidature est directement mise à disposition du recruteur. Si vous avez fait une erreur importante dans vos informations, nous vous invitons à soumettre à nouveau votre dossier avec le même numéro de téléphone, ou à nous envoyer un message d'ajustement.
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="step-container" id="step3">
-                <label>Nombre d'années d'expérience vécues</label>
-                <input type="number" id="appExp" required placeholder="Ex: 2">
-                <label>Présentation abrégée</label>
-                <textarea id="appMotivation" rows="4" placeholder="Vos atouts majeurs pour ce poste..."></textarea>
-                <div style="display: flex; gap: 0.5rem;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Retour</button>
-                    <button type="button" class="btn btn-primary" onclick="setupSummary()">Vérifier</button>
-                </div>
-            </div>
-
-            <div class="step-container" id="step4">
-                <h3 style="margin-bottom: 1rem; color: var(--accent-gold);">Validation finale du dossier</h3>
-                <div id="summaryReview" style="background: #121212; border: 1px solid var(--border-dark); padding: 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.7;"></div>
-                <div style="display: flex; gap: 0.5rem;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Ajuster</button>
-                    <button type="button" class="btn btn-primary" onclick="submitPremiumApplication()">Transmettre Candidature</button>
-                </div>
-            </div>
-        </form>
-    </section>
-
-    <!-- ÉCRAN 3 : ACCÈS SUIVI & HISTORIQUE -->
-    <section id="viewDashboard" class="card" style="display: none;">
-        <h2>Suivi de vos Candidatures</h2>
-        <div id="trackingInputBlock" style="margin-bottom: 1.5rem;">
-            <label>Saisissez votre numéro de téléphone pour vérifier vos statuts :</label>
-            <div style="display: flex; gap: 0.5rem;">
-                <input type="tel" id="searchPhone" placeholder="Ex: 690000000" style="margin: 0;">
-                <button class="btn btn-primary" onclick="triggerSearchDashboard()">Rechercher</button>
-            </div>
         </div>
-        <div id="dashboardHistory" style="margin-top: 1rem;">Entrez votre numéro pour afficher votre historique.</div>
+
+        <!-- SECTION 5 : FORMULAIRE DE CANDIDATURE -->
+        <div id="viewForm" class="form-card" style="display: none;">
+            <div class="progress-bar">
+                <span class="progress-step active" id="p1">1. Profil</span>
+                <span class="progress-step" id="p2">2. Documents</span>
+                <span class="progress-step" id="p3">3. Expérience</span>
+                <span class="progress-step" id="p4">4. Confirmation</span>
+            </div>
+
+            <form id="multiStepForm">
+                <div class="step-container active" id="step1">
+                    <label>Nom & Prénom</label>
+                    <input type="text" id="candName" required placeholder="Ex: Trésor Mbe">
+                    <label>Téléphone portable</label>
+                    <input type="tel" id="candPhone" required placeholder="Ex: 690000000">
+                    <label>Ville actuelle</label>
+                    <select id="candCity">
+                        <option>Douala</option><option>Yaoundé</option><option>Garoua</option><option>Bafoussam</option>
+                    </select>
+                    <button type="button" class="btn btn-cv" onclick="nextStep(2)">Suivant</button>
+                </div>
+
+                <div class="step-container" id="step2">
+                    <label>Lien du CV</label>
+                    <input type="text" id="candCV" placeholder="Lien Drive, Dropbox ou tapez OK">
+                    <label>Plus haut diplôme</label>
+                    <input type="text" id="candDiploma" placeholder="Ex: Master">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" class="btn btn-search" onclick="prevStep(1)">Retour</button>
+                        <button type="button" class="btn btn-cv" onclick="nextStep(3)">Suivant</button>
+                    </div>
+                </div>
+
+                <div class="step-container" id="step3">
+                    <label>Années d'expérience vécues</label>
+                    <input type="number" id="appExp" required placeholder="Ex: 2">
+                    <label>Présentation abrégée</label>
+                    <textarea id="appMotivation" rows="4" placeholder="Vos points forts..."></textarea>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" class="btn btn-search" onclick="prevStep(2)">Retour</button>
+                        <button type="button" class="btn btn-cv" onclick="setupSummary()">Vérifier</button>
+                    </div>
+                </div>
+
+                <div class="step-container" id="step4">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-green);">Validation du dossier</h3>
+                    <div id="summaryReview" style="background: #f8fafc; border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.7;"></div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" class="btn btn-search" onclick="prevStep(3)">Ajuster</button>
+                        <button type="button" class="btn btn-cv" onclick="submitPremiumApplication()">Transmettre Candidature</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- SECTION 6 : SUIVI CANDIDATURE -->
+        <div id="viewDashboard" class="form-card" style="display: none;">
+            <h2>Suivi de vos Candidatures</h2>
+            <div id="trackingInputBlock" style="margin-bottom: 1.5rem;">
+                <label>Saisissez votre numéro de téléphone :</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="tel" id="searchPhone" placeholder="Ex: 690000000" style="margin: 0;">
+                    <button class="btn btn-cv" onclick="triggerSearchDashboard()">Rechercher</button>
+                </div>
+            </div>
+            <div id="dashboardHistory" style="margin-top: 1rem;">Entrez votre numéro pour afficher votre historique.</div>
+        </div>
     </section>
+
+    <!-- COLONNE DROITE -->
+    <aside class="sidebar">
+        <div class="widget-card">
+            <h3>Souscrire à notre newsletter</h3>
+            <form class="newsletter-form" id="newsletterForm" onsubmit="submitNewsletter(event)">
+                <label>Noms <span style="color: red;">*</span></label>
+                <input type="text" id="newsName" required placeholder="Ex: Cabrel Mbouyom">
+                <label>Email <span style="color: red;">*</span></label>
+                <input type="email" id="newsEmail" required placeholder="Ex: cabrel@exemple.com">
+                <button type="submit" class="btn-newsletter" id="btnNewsSubmit">Souscrire</button>
+            </form>
+        </div>
+    </aside>
 </main>
 
-<!-- FOOTER PROFESSIONNEL COMPLET -->
 <footer>
     <div class="footer-top">
         <div class="footer-column">
-            <h4>KamerJobs</h4>
-            <p>Votre tremplin vers les meilleures opportunités professionnelles. Une plateforme gérée avec excellence pour valoriser les compétences du terroir.</p>
+            <h4>JobsOffers</h4>
+            <p>Connecter les meilleurs talents aux meilleures opportunités du pays.</p>
         </div>
         <div class="footer-column">
-            <h4>Navigation</h4>
+            <h4>Support</h4>
             <ul>
-                <li><a href="#" onclick="scrollToJobs(event)">Offres en cours</a></li>
-                <li><a href="#" onclick="showTrackingSection()">Suivi des dossiers</a></li>
-                <li><a href="#viewAbout">Qui sommes-nous</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h4>Support & Contact</h4>
-            <ul>
-                <li>📧 support@kamerjobs.com</li>
-                <li>📞 +237 696 85 27 85</li>
+                <li>📧 contact@jobsoffers.cm</li>
                 <li>📍 Douala, Cameroun</li>
             </ul>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2026 KamerJobs. Tous droits réservés. Plateforme Premium Élite Web Sarl.</p>
-        <div style="display: flex; gap: 1rem;">
-            <a href="#" style="color: var(--text-muted); text-decoration: none;">Mentions Légales</a>
-            <a href="#" style="color: var(--text-muted); text-decoration: none;">RGPD & Confidentialité</a>
-        </div>
+        <p>&copy; 2026 JobsOffers. Tous droits réservés.</p>
     </div>
 </footer>
 
 <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbxhzVYEBW9z3MYa8ohKsgnxhduhKh7Ybn8zpnGc9gSjtmhcTS25jTeLcuudNfSVfN-4bw/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbzM2O249IqR9_pzAcwW-nV-OP0GFz01nX61FpC0vSMQx2huZ9YCkuUF7OVIGEcyvpGkuA/exec";
     let currentJobId = null;
+    
+    let allRawJobs = [];
+    let listUne = [];
+    let listJobs = [];
+    let listStages = [];
+    let currentActiveTab = 'une';
 
-    document.addEventListener("DOMContentLoaded", loadPublicJobs);
+    const COMPANY_DATA = {
+        "GEDCOOP": { logo: "https://i.postimg.cc/XqHQ90bC/IMG-9983.jpg" },
+        "Ets Eco-Produits": { logo: "https://i.postimg.cc/x1K1CjYJ/IMG-9979.jpg" },
+        "ASKY Airlines": { logo: "https://i.postimg.cc/mZJXwC16/80008c21-6c8e-4582-b9c1-b60abd886880.jpg" },
+        "SERVITEL": { logo: "https://i.postimg.cc/7hWnfM3s/IMG-9984.jpg" },
+        "SICOMETALL": { logo: "https://i.postimg.cc/Xqpv7w7y/IMG-9978.jpg" },
+        "Keda Cameroon Ceramics Ltd": { logo: "https://i.postimg.cc/NMrg3QNX/IMG-9977.jpg" },
+        "Résidence Jardin Tropical": { logo: "https://i.postimg.cc/L8f38Pn7/IMG-9986.jpg" },
+        "ASN Connectics Cameroon": { logo: "https://i.postimg.cc/gJMvTqB1/IMG-9987.jpg" },
+        "icrafon": { logo: "https://i.postimg.cc/dtCy2Ywd/IMG-9988.jpg" },
+        "Yield 4 Finance": { logo: "https://i.postimg.cc/3w80Q0pR/IMG-9989.jpg" },
+        "IVALUX": { logo: "https://i.postimg.cc/26J1WHtL/IMG-9990.jpg" }
+    };
 
-    // GESTION DU RESPONSIVE MENU HAMBURGER
-    function toggleMenu() {
-        document.getElementById('navLinks').classList.toggle('open');
+    function getLogoUrl(company) {
+        const cleanName = company.trim();
+        return COMPANY_DATA[cleanName] ? COMPANY_DATA[cleanName].logo : `https://via.placeholder.com/150/ffffff/07442c?text=${encodeURIComponent(cleanName)}`;
     }
 
-    // RENVOIE EXACTEMENT SUR LA PARTIE "POSTES DISPONIBLES"
+    document.addEventListener("DOMContentLoaded", () => {
+        loadPublicJobs();
+        
+        // Relancer la recherche automatique sur l'appui de la touche Entrée
+        document.getElementById('keywordSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') { triggerSearch(); }
+        });
+    });
+
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+
+    function highlightNav(activeId) {
+        document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
+        if (activeId) document.getElementById(activeId).classList.add('active');
+    }
+
+    function hideAllViews() {
+        document.getElementById('viewList').style.display = 'none';
+        document.getElementById('viewJobDetails').style.display = 'none';
+        document.getElementById('viewForm').style.display = 'none';
+        document.getElementById('viewDashboard').style.display = 'none';
+        document.getElementById('viewEmployers').style.display = 'none';
+        document.getElementById('viewCompanyDetails').style.display = 'none';
+        document.getElementById('viewAbout').style.display = 'none';
+        document.getElementById('viewHelp').style.display = 'none';
+    }
+
     function scrollToJobs(event) {
         if(event) event.preventDefault();
-        
-        // 1. Réaffiche l'accueil complet
-        document.getElementById('viewAbout').style.display = 'block';
+        hideAllViews();
         document.getElementById('viewList').style.display = 'block';
-        document.getElementById('viewForm').style.display = 'none';
-        document.getElementById('viewDashboard').style.display = 'none';
+        highlightNav('nav-accueil');
         document.getElementById('navLinks').classList.remove('open');
-        
-        // 2. Défilement immédiat et précis vers le bloc des offres
-        setTimeout(() => {
-            document.getElementById('viewList').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 50);
-    }
-
-    function showHomeSection() {
-        document.getElementById('viewAbout').style.display = 'block';
-        document.getElementById('viewList').style.display = 'block';
-        document.getElementById('viewForm').style.display = 'none';
-        document.getElementById('viewDashboard').style.display = 'none';
-        document.getElementById('navLinks').classList.remove('open');
+        setTimeout(() => { document.getElementById('viewList').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
     }
 
     function showTrackingSection() {
-        document.getElementById('viewAbout').style.display = 'none';
-        document.getElementById('viewList').style.display = 'none';
-        document.getElementById('viewForm').style.display = 'none';
+        hideAllViews();
         document.getElementById('viewDashboard').style.display = 'block';
+        highlightNav(null);
         document.getElementById('navLinks').classList.remove('open');
+    }
+
+    function showEmployersSection(event) {
+        if(event) event.preventDefault();
+        hideAllViews();
+        document.getElementById('viewEmployers').style.display = 'block';
+        highlightNav('nav-employeurs');
+        document.getElementById('navLinks').classList.remove('open');
+        buildEmployersGrid();
+    }
+
+    function showAboutSection(event) {
+        if(event) event.preventDefault();
+        hideAllViews();
+        document.getElementById('viewAbout').style.display = 'block';
+        highlightNav('nav-about');
+        document.getElementById('navLinks').classList.remove('open');
+    }
+
+    function showHelpSection(event) {
+        if(event) event.preventDefault();
+        hideAllViews();
+        document.getElementById('viewHelp').style.display = 'block';
+        highlightNav('nav-help');
+        document.getElementById('navLinks').classList.remove('open');
+    }
+
+    function toggleFaq(button) {
+        const item = button.parentElement;
+        const content = button.nextElementSibling;
+        
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+            if (otherItem !== item && otherItem.classList.contains('active')) {
+                otherItem.classList.remove('active');
+                otherItem.querySelector('.faq-content').style.maxHeight = null;
+            }
+        });
+
+        item.classList.toggle('active');
+        if (item.classList.contains('active')) {
+            content.style.maxHeight = content.scrollHeight + "px";
+        } else {
+            content.style.maxHeight = null;
+        }
+    }
+
+    function buildEmployersGrid() {
+        const grid = document.getElementById('employersGridContainer');
+        const visibleCompanies = Object.keys(COMPANY_DATA);
+        grid.innerHTML = visibleCompanies.map(comp => `
+            <div class="employer-card" onclick="showCompanyPage('${comp.replace(/'/g, "\\'")}')">
+                <div class="employer-logo-wrap">
+                    <img src="${getLogoUrl(comp)}" alt="${comp}">
+                </div>
+                <div class="employer-name-link">${comp}</div>
+            </div>
+        `).join('');
+    }
+
+    function showCompanyPage(companyName) {
+        hideAllViews();
+        document.getElementById('viewCompanyDetails').style.display = 'block';
+        const bannerWrapper = document.getElementById('companyBannerWrapper');
+        bannerWrapper.innerHTML = `
+            <div class="company-header-banner">
+                <div class="company-banner-logo">
+                    <img src="${getLogoUrl(companyName)}" alt="${companyName}">
+                </div>
+                <div class="company-banner-title">${companyName}</div>
+            </div>
+        `;
+        const filtered = allRawJobs.filter(j => j.company.trim().toLowerCase() === companyName.trim().toLowerCase());
+        const annoncesContainer = document.getElementById('companyAnnoncesContainer');
+
+        if(filtered.length === 0) {
+            annoncesContainer.innerHTML = `<p style="color: var(--text-muted); padding: 1rem 0;">Aucune annonce en cours de recrutement actuellement pour ${companyName}.</p>`;
+            return;
+        }
+
+        annoncesContainer.innerHTML = filtered.map(job => {
+            const isStage = (job.title + " " + (job.description || "")).toLowerCase().includes("stage");
+            return `
+                <div class="comp-job-card">
+                    <a href="#" class="comp-job-link" onclick="showJobDetails('${job.id}')">
+                        ${job.company} recrute un(e) ${job.title}
+                    </a>
+                    <div class="comp-job-meta">
+                        Publié le 13-07-2026 | Postuler avant le 2026-07-25 <br>
+                        Expérience requise: ${job.experience || 'Débutant ou Intermédiaire'} <br>
+                        <strong>${isStage ? 'Stage' : 'Job'}</strong>
+                    </div>
+                </div>
+            `;
+        }).join('');
     }
 
     function loadPublicJobs() {
         fetch(`${API_URL}?action=getJobs`).then(r => r.json()).then(data => {
-            const container = document.getElementById('jobsContainer');
-            if(!data || !data.length) { container.innerHTML = "<p style='color: var(--text-muted);'>Aucune offre disponible actuellement.</p>"; return; }
-            container.innerHTML = data.map(job => `
-                <div class="job-row">
-                    <div>
-                        <div class="job-title">${job.title}</div>
-                        <div class="job-meta">Secteur : <span>${job.company}</span> — 📍 ${job.location}</div>
-                    </div>
-                    <button class="btn btn-primary" onclick="openApplicationForm('${job.id}')">Postuler</button>
-                </div>
-            `).join('');
+            if(!data || !data.length) data = [];
+            allRawJobs = data;
+            listUne = []; listJobs = []; listStages = [];
+            let nonStages = [];
+            data.forEach(job => {
+                const combinedText = (job.title + " " + (job.description || "")).toLowerCase();
+                if(combinedText.includes("stage")) { listStages.push(job); } else { nonStages.push(job); }
+            });
+            listUne = nonStages.slice(0, 5);
+            listJobs = nonStages;
+            document.getElementById('badgeUne').textContent = listUne.length;
+            document.getElementById('badgeJobs').textContent = listJobs.length;
+            document.getElementById('badgeStages').textContent = listStages.length;
+            renderTabContent();
+        }).catch(err => {
+            document.getElementById('jobsContainer').innerHTML = "<p style='color: var(--text-muted);'>Erreur lors du chargement des offres.</p>";
         });
     }
 
+    function switchTab(tabName) {
+        currentActiveTab = tabName;
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        const indexMap = { 'une': 0, 'jobs': 1, 'stages': 2 };
+        document.querySelectorAll('.tab-btn')[indexMap[tabName]].classList.add('active');
+        renderTabContent();
+    }
+
+    function renderTabContent() {
+        const container = document.getElementById('jobsContainer');
+        let targetedList = [];
+        if (currentActiveTab === 'une') targetedList = listUne;
+        else if (currentActiveTab === 'jobs') targetedList = listJobs;
+        else if (currentActiveTab === 'stages') targetedList = listStages;
+
+        if(!targetedList.length) {
+            container.innerHTML = "<p style='color: var(--text-muted); padding: 1.5rem 0;'>Aucune offre disponible dans cette catégorie.</p>";
+            return;
+        }
+        container.innerHTML = targetedList.map(job => `
+            <div class="job-card">
+                <div class="job-details">
+                    <a href="#" class="job-title-link" onclick="showJobDetails('${job.id}')">${job.title}</a>
+                    <div class="job-card-meta">
+                        <strong>${job.company}</strong> | 📍 ${job.location || 'Cameroun'} | Publié le 13-07-2026<br>
+                        <span class="tag-sector">${currentActiveTab === 'stages' ? 'Stage' : 'Job'}</span>
+                    </div>
+                </div>
+                <button class="btn btn-cv" onclick="showJobDetails('${job.id}')" style="padding: 0.5rem 1rem;">Voir détails</button>
+            </div>
+        `).join('');
+    }
+
+    function triggerSearch() {
+        const keyword = document.getElementById('keywordSearch').value.trim().toLowerCase();
+        const city = document.getElementById('cityFilter').value;
+
+        const filteredResults = allRawJobs.filter(job => {
+            const matchesKeyword = !keyword || 
+                job.title.toLowerCase().includes(keyword) || 
+                job.company.toLowerCase().includes(keyword) || 
+                (job.description && job.description.toLowerCase().includes(keyword));
+                
+            const matchesCity = !city || 
+                (job.location && job.location.toLowerCase().includes(city.toLowerCase()));
+
+            return matchesKeyword && matchesCity;
+        });
+
+        listUne = []; listJobs = []; listStages = [];
+        let nonStages = [];
+
+        filteredResults.forEach(job => {
+            const combinedText = (job.title + " " + (job.description || "")).toLowerCase();
+            if (combinedText.includes("stage")) { 
+                listStages.push(job); 
+            } else { 
+                nonStages.push(job); 
+            }
+        });
+
+        listUne = nonStages.slice(0, 5);
+        listJobs = nonStages;
+
+        document.getElementById('badgeUne').textContent = listUne.length;
+        document.getElementById('badgeJobs').textContent = listJobs.length;
+        document.getElementById('badgeStages').textContent = listStages.length;
+
+        hideAllViews();
+        document.getElementById('viewList').style.display = 'block';
+        highlightNav('nav-accueil');
+        renderTabContent();
+    }
+
+    function showJobDetails(jobId) {
+        const job = allRawJobs.find(j => String(j.id) === String(jobId));
+        if(!job) {
+            alert("Impossible de trouver les détails de cette offre.");
+            return;
+        }
+
+        hideAllViews();
+        const detailsContainer = document.getElementById('jobDetailsContent');
+        const isStage = (job.title + " " + (job.description || "")).toLowerCase().includes("stage");
+        
+        detailsContainer.innerHTML = `
+            <div class="job-detail-header">
+                <h2 class="job-detail-title">${job.title}</h2>
+                <div style="font-size: 1.1rem; font-weight: 700; color: var(--accent-orange); margin-bottom: 0.5rem;">
+                    🏢 ${job.company}
+                </div>
+                <div class="job-detail-info-grid">
+                    <div class="job-detail-info-item">
+                        <strong>📍 Localisation :</strong> ${job.location || 'Cameroun'}
+                    </div>
+                    <div class="job-detail-info-item">
+                        <strong>💼 Type de contrat :</strong> ${isStage ? 'Stage / Période d’apprentissage' : 'Emploi / Contrat CDD-CDI'}
+                    </div>
+                    <div class="job-detail-info-item">
+                        <strong>⏳ Expérience requise :</strong> ${job.experience || 'Débutant ou Intermédiaire'}
+                    </div>
+                    <div class="job-detail-info-item">
+                        <strong>📅 Date de publication :</strong> Publié le 13-07-2026
+                    </div>
+                </div>
+            </div>
+            
+            <div class="job-detail-body">
+                <h4>Description de l'offre</h4>
+                <p>${job.description ? job.description.replace(/\n/g, '<br>') : "Aucune description détaillée n'a été fournie pour cette offre. Veuillez postuler directement pour obtenir plus de détails auprès des équipes de recrutement."}</p>
+            </div>
+
+            <div style="display: flex; gap: 1rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                <button class="btn btn-secondary" onclick="scrollToJobs(event)">← Retour aux offres</button>
+                <button class="btn btn-cv" onclick="openApplicationForm('${job.id}')">Postuler à cette offre ✍️</button>
+            </div>
+        `;
+
+        document.getElementById('viewJobDetails').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function openApplicationForm(jobId) {
-        currentJobId = jobId;
-        document.getElementById('viewAbout').style.display = 'none';
-        document.getElementById('viewList').style.display = 'none';
-        document.getElementById('viewDashboard').style.display = 'none';
+        currentJobId = jobId; hideAllViews();
         document.getElementById('viewForm').style.display = 'block';
     }
 
@@ -326,16 +802,14 @@
         document.getElementById('step' + step).classList.add('active');
         for(let i=1; i<=step; i++) document.getElementById('p'+i).classList.add('active');
     }
-
     function prevStep(step) { nextStep(step); }
 
     function setupSummary() {
         document.getElementById('summaryReview').innerHTML = `
-            <span style="color:var(--accent-gold);">Candidat :</span> ${document.getElementById('candName').value}<br>
-            <span style="color:var(--accent-gold);">Contact :</span> ${document.getElementById('candPhone').value}<br>
-            <span style="color:var(--accent-gold);">Localisation :</span> ${document.getElementById('candCity').value}<br>
-            <span style="color:var(--accent-gold);">Niveau :</span> ${document.getElementById('candDiploma').value}<br>
-            <span style="color:var(--accent-gold);">Expérience renseignée :</span> ${document.getElementById('appExp').value} ans
+            <span style="color:var(--accent-orange);">Candidat :</span> ${document.getElementById('candName').value}<br>
+            <span style="color:var(--accent-orange);">Contact :</span> ${document.getElementById('candPhone').value}<br>
+            <span style="color:var(--accent-orange);">Localisation :</span> ${document.getElementById('candCity').value}<br>
+            <span style="color:var(--accent-orange);">Expérience :</span> ${document.getElementById('appExp').value} ans
         `;
         nextStep(4);
     }
@@ -347,12 +821,9 @@
             candidate: { firstName: document.getElementById('candName').value, lastName: "", phone: phone, city: document.getElementById('candCity').value },
             application: { jobId: currentJobId, experienceYears: document.getElementById('appExp').value }
         };
-
-        fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
-        .then(r => r.json())
-        .then(data => {
+        fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) }).then(r => r.json()).then(data => {
             if(data.success) {
-                alert("Votre dossier Premium a été validé et archivé.");
+                alert("Candidature transmise avec succès.");
                 document.getElementById('searchPhone').value = phone;
                 triggerSearchDashboard();
             }
@@ -364,19 +835,59 @@
         if(!phone) return;
         showTrackingSection();
         const hDiv = document.getElementById('dashboardHistory');
-        hDiv.innerHTML = "Recherche de vos dossiers en cours...";
-        
+        hDiv.innerHTML = "Recherche en cours...";
         fetch(`${API_URL}?action=getCandidateDashboard&phone=${phone}`).then(r => r.json()).then(data => {
-            if(!data.history || !data.history.length) { hDiv.innerHTML = "<p style='color:var(--text-muted);'>Aucune postulation liée à ce numéro de téléphone.</p>"; return; }
+            if(!data.history || !data.history.length) { hDiv.innerHTML = "<p style='color:var(--text-muted);'>Aucun dossier trouvé.</p>"; return; }
             hDiv.innerHTML = data.history.map(item => `
-                <div class="job-row">
-                    <div>
-                        <div class="job-title">${item.title}</div>
-                        <div class="job-meta">${item.company} — Enregistré le ${item.date}</div>
+                <div class="job-card">
+                    <div class="job-details">
+                        <div class="job-title-link" style="pointer-events:none;">${item.title}</div>
+                        <div class="job-card-meta">${item.company} — Statut: <span style="color:var(--primary-green); font-weight:700;">${item.status}</span></div>
                     </div>
-                    <span class="status-badge status-${item.status.toLowerCase().replace(' ', '-')}">${item.status}</span>
                 </div>
             `).join('');
+        });
+    }
+
+    // Gestion asynchrone de la Newsletter (évite le rechargement)
+    function submitNewsletter(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('newsName').value.trim();
+        const email = document.getElementById('newsEmail').value.trim();
+        const btn = document.getElementById('btnNewsSubmit');
+
+        if (!name || !email) return;
+
+        btn.disabled = true;
+        btn.textContent = "Inscription en cours...";
+
+        const payload = {
+            action: "subscribeNewsletter",
+            name: name,
+            email: email
+        };
+
+        fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                alert("Merci ! Votre inscription à la newsletter a été enregistrée avec succès. 🎉");
+                document.getElementById('newsletterForm').reset();
+            } else {
+                alert("Une erreur est survenue lors de l'inscription : " + (data.message || "Erreur inconnue"));
+            }
+        })
+        .catch(err => {
+            console.error("Erreur Newsletter:", err);
+            alert("Impossible de joindre le serveur. Veuillez réessayer plus tard.");
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.textContent = "Souscrire";
         });
     }
 </script>
