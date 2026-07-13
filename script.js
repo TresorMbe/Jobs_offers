@@ -1,7 +1,7 @@
 // =========================================================================
 // CONFIGURATION ET VARIABLES GLOBALES
 // =========================================================================
-const API_URL = "https://script.google.com/macros/s/AKfycbyWCzEFqbU7J6JZMrD2MANYOEdXexMS-VVVuAGVb8K9kf5pnuwW0elPLiUYvlRBUSMX1g/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyYleex0RVbqlwuBsuZYU_2b-xJ59SfEJUtZUYedEzwTRE1lQ6R4HX0OnWpwOqgohHSuQ/exec";
 let allJobs = [];
 let adminToken = localStorage.getItem('adminToken') || null;
 
