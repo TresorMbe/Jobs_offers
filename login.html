@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KamerJobs - Connexion Administration</title>
+    <title>Jobs Offers - Connexion Administration</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #0a0a0a;
             --surface-dark: #151515;
-            --accent-gold: #d4af37;
-            --accent-gold-hover: #b8962e;
+            --accent-green: #1e3f20; 
+            --accent-orange: #f97316; 
+            --accent-orange-hover: #ea580c;
             --text-light: #f8fafc;
             --text-muted: #64748b;
             --border-dark: #2a2a2a;
@@ -22,7 +23,8 @@
         .login-container { max-width: 420px; width: 100%; }
         
         .brand-header { text-align: center; margin-bottom: 2rem; }
-        .brand-header .logo { font-size: 1.8rem; font-weight: 800; color: var(--accent-gold); text-decoration: none; letter-spacing: -0.03em; }
+        .brand-header .logo { font-size: 1.8rem; font-weight: 800; color: #ffffff; text-decoration: none; letter-spacing: -0.03em; }
+        .brand-header .logo span { color: var(--accent-orange); }
         .brand-header p { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem; }
 
         .card { background: var(--surface-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 2.5rem 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -32,34 +34,33 @@
         
         .input-group { position: relative; margin-bottom: 1.25rem; }
         input[type="text"], input[type="password"] { width: 100%; padding: 0.85rem 1rem; background: #121212; border: 1px solid var(--border-dark); border-radius: 8px; font-size: 0.95rem; color: #ffffff; outline: none; transition: border-color 0.2s; }
-        input:focus { border-color: var(--accent-gold); }
+        input:focus { border-color: var(--accent-orange); }
         
-        /* Bouton Afficher le mot de passe */
         .toggle-password { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; font-weight: 600; user-select: none; transition: color 0.2s; }
-        .toggle-password:hover { color: var(--accent-gold); }
+        .toggle-password:hover { color: var(--accent-orange); }
 
-        /* Options alignées (Se souvenir de moi & mot de passe oublié) */
         .form-options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem; font-size: 0.85rem; }
         .remember-me { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #e2e8f0; user-select: none; }
-        .remember-me input { accent-color: var(--accent-gold); width: 15px; height: 15px; cursor: pointer; }
+        .remember-me input { accent-color: var(--accent-orange); width: 15px; height: 15px; cursor: pointer; }
         .forgot-password { color: var(--text-muted); text-decoration: none; transition: color 0.2s; font-weight: 500; }
-        .forgot-password:hover { color: var(--accent-gold); }
+        .forgot-password:hover { color: var(--accent-orange); }
 
-        .btn-gold { width: 100%; padding: 0.85rem; background: var(--accent-gold); color: #000000; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
-        .btn-gold:hover { background: var(--accent-gold-hover); }
+        .btn-orange { width: 100%; padding: 0.85rem; background: var(--accent-orange); color: #ffffff; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
+        .btn-orange:hover { background: var(--accent-orange-hover); }
+        .btn-orange:disabled { background: var(--text-muted); cursor: not-allowed; }
 
         .error-message { display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: var(--error-red); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1.25rem; text-align: center; font-weight: 500; }
         
         .footer-back { text-align: center; margin-top: 2rem; font-size: 0.85rem; }
         .footer-back a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-        .footer-back a:hover { color: var(--accent-gold); }
+        .footer-back a:hover { color: var(--accent-orange); }
     </style>
 </head>
 <body>
 
 <div class="login-container">
     <div class="brand-header">
-        <a href="#" class="logo">Kamer<span style="color:#ffffff;">Jobs</span></a>
+        <a href="#" class="logo">Jobs <span>Offers</span></a>
         <p>Espace d'administration et de gestion des talents</p>
     </div>
 
@@ -71,7 +72,7 @@
         <form id="loginForm" onsubmit="handleLogin(event)">
             <label for="username">Identifiant unique</label>
             <div class="input-group">
-                <input type="text" id="username" required placeholder="Ex: admin_tresor" autocomplete="username">
+                <input type="text" id="username" required placeholder="Ex: admincabrel" autocomplete="username">
             </div>
 
             <label for="password">Mot de passe</label>
@@ -88,7 +89,7 @@
                 <a href="#" class="forgot-password" onclick="alert('Contactez l\'administrateur système pour réinitialiser vos accès.')">Mot de passe oublié ?</a>
             </div>
 
-            <button type="submit" class="btn-gold">Se connecter de manière sécurisée</button>
+            <button type="submit" id="submitBtn" class="btn-orange">Se connecter de manière sécurisée</button>
         </form>
     </div>
 
@@ -98,12 +99,10 @@
 </div>
 
 <script>
-    // Configuration temporaire des identifiants d'accès d'administration (à adapter ou lier avec ton Apps Script)
-    const ADMIN_USER = "admin";
-    const ADMIN_PASS = "KamerJobs2026"; 
+    // URL de ton API Google Apps Script (Remplace par l'URL exacte de ton déploiement)
+    const API_URL = "https://script.google.com/macros/s/AKfycbzM2O249IqR9_pzAcwW-nV-OP0GFz01nX61FpC0vSMQx2huZ9YCkuUF7OVIGEcyvpGkuA/exec"; 
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Pré-remplit l'identifiant si "Se souvenir de moi" était coché
         const savedUser = localStorage.getItem("rememberedUser");
         if (savedUser) {
             document.getElementById("username").value = savedUser;
@@ -111,7 +110,6 @@
         }
     });
 
-    // Fonction de visibilité du mot de passe
     function togglePasswordVisibility() {
         const passwordInput = document.getElementById("password");
         const toggleBtn = document.querySelector(".toggle-password");
@@ -125,35 +123,65 @@
         }
     }
 
-    // Gestion de la soumission du formulaire
-    function handleLogin(event) {
+    async function handleLogin(event) {
         event.preventDefault();
         
         const userField = document.getElementById("username").value.trim();
         const passField = document.getElementById("password").value;
         const rememberMeChecked = document.getElementById("rememberMe").checked;
         const errorDiv = document.getElementById("errorMessage");
+        const submitBtn = document.getElementById("submitBtn");
 
-        // Simulation de validation stricte
-        if (userField === ADMIN_USER && passField === ADMIN_PASS) {
-            errorDiv.style.display = "none";
-            
-            // Gestion de l'option "Se souvenir de moi"
-            if (rememberMeChecked) {
-                localStorage.setItem("rememberedUser", userField);
+        // Désactivation du bouton pendant le traitement
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Vérification en cours...";
+        errorDiv.style.display = "none";
+
+        try {
+            // Requête vers le endpoint de l'API Apps Script
+            const response = await fetch(API_URL, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify({
+                    action: "authenticateAdmin",
+                    username: userField,
+                    password: passField
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success && data.token) {
+                // Gestion du "Se souvenir de moi"
+                if (rememberMeChecked) {
+                    localStorage.setItem("rememberedUser", userField);
+                } else {
+                    localStorage.removeItem("rememberedUser");
+                }
+
+                // Stockage sécurisé du token pour les requêtes de la page d'administration
+                sessionStorage.setItem("isAdminAuthenticated", "true");
+                sessionStorage.setItem("jobsOffersToken", data.token);
+                
+                // Redirection vers le tableau de bord administration
+                window.location.href = "admin.html";
             } else {
-                localStorage.removeItem("rememberedUser");
+                // Affichage du message d'erreur renvoyé par l'API
+                errorDiv.textContent = data.error || "Identifiants incorrects. Veuillez réessayer.";
+                errorDiv.style.display = "block";
+                document.getElementById("password").value = "";
             }
-
-            // Génération d'une session temporaire locale
-            sessionStorage.setItem("isAdminAuthenticated", "true");
-            
-            // Redirection vers ton fichier d'administration unique
-            window.location.href = "admin.html";
-        } else {
-            // Affichage propre du message d'erreur
+        } catch (error) {
+            console.error("Erreur d'authentification:", error);
+            errorDiv.textContent = "Erreur de connexion au serveur. Veuillez réessayer plus tard.";
             errorDiv.style.display = "block";
-            document.getElementById("password").value = ""; // Reset du champ MDP
+        } finally {
+            // Réactivation du bouton
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Se connecter de manière sécurisée";
         }
     }
 </script>
