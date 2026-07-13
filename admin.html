@@ -3,32 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KamerJobs - Administration Élite</title>
+    <title>Jobs Offers - Administration Élite</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #121212;
             --sidebar-bg: #1a1a1a;
-            --accent-gold: #d4af37;
+            --accent-green: #1e3f20; /* Vert forestier */
+            --accent-orange: #f97316; /* Orange */
             --text-light: #f8fafc;
             --border-dark: #2a2a2a;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: #0a0a0a; color: var(--text-light); display: flex; min-height: 100vh; }
 
+        /* SÉCURITÉ : Masquer l'écran au chargement pour les non connectés */
+        body { display: none; }
+
         /* HEADER MOBILE */
         .mobile-header { display: none; width: 100%; background: var(--sidebar-bg); padding: 1rem; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-dark); position: fixed; top: 0; z-index: 200; }
-        .mobile-header .brand { color: var(--accent-gold); font-weight: 800; font-size: 1.2rem; }
+        .mobile-header .brand { color: #fff; font-weight: 800; font-size: 1.2rem; }
+        .mobile-header .brand span { color: var(--accent-orange); }
         .menu-toggle { background: var(--bg-dark); border: 1px solid var(--border-dark); color: #fff; padding: 0.5rem; border-radius: 6px; cursor: pointer; font-size: 1.1rem; }
 
-        /* SIDEBAR (Uniquement Offres, Candidatures & Déconnexion) */
+        /* SIDEBAR */
         .sidebar { width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid var(--border-dark); display: flex; flex-direction: column; height: 100vh; position: fixed; top: 0; left: 0; z-index: 150; transition: transform 0.3s ease; }
-        .sidebar-brand { padding: 1.5rem; font-size: 1.3rem; font-weight: 800; color: var(--accent-gold); border-bottom: 1px solid var(--border-dark); }
+        .sidebar-brand { padding: 1.5rem; font-size: 1.3rem; font-weight: 800; color: #fff; border-bottom: 1px solid var(--border-dark); }
+        .sidebar-brand span { color: var(--accent-orange); }
         
         .sidebar-menu { list-style: none; padding: 1rem 0; flex: 1; display: flex; flex-direction: column; }
         .menu-item { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.5rem; color: #b3b3b3; text-decoration: none; font-weight: 600; font-size: 0.95rem; border-left: 4px solid transparent; transition: all 0.2s; cursor: pointer; }
         .menu-item:hover { background: rgba(255,255,255,0.02); color: #fff; }
-        .menu-item.active { background: rgba(212, 175, 55, 0.08); color: var(--accent-gold); border-left-color: var(--accent-gold); }
+        .menu-item.active { background: rgba(249, 115, 22, 0.08); color: var(--accent-orange); border-left-color: var(--accent-orange); }
         
         .menu-item.logout { color: #ef4444; margin-top: auto; border: none; }
         .menu-item.logout:hover { background: rgba(239, 68, 68, 0.05); }
@@ -45,24 +51,20 @@
         
         /* FORMULAIRES */
         label { display: block; font-size: 0.8rem; font-weight: 700; color: #64748b; margin-bottom: 0.5rem; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 0.75rem; background: #121212; border: 1px solid var(--border-dark); border-radius: 8px; color: #fff; margin-bottom: 1.25rem; outline: none; }
-        input:focus, select:focus, textarea:focus { border-color: var(--accent-gold); }
+        input, select, textarea { width: 100%; padding: 0.75rem; background: #121212; border: 1px solid var(--border-dark); border-radius: 8px; color: #fff; margin-bottom: 1.25rem; outline: none; transition: border-color 0.2s; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-orange); }
         
-        .btn-gold { padding: 0.65rem 1.25rem; background: var(--accent-gold); color: #000; font-weight: 700; border-radius: 6px; border: none; cursor: pointer; font-size: 0.85rem; }
-        .btn-danger { padding: 0.35rem 0.75rem; background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); font-weight: 700; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+        .btn-orange { padding: 0.65rem 1.25rem; background: var(--accent-orange); color: #fff; font-weight: 700; border-radius: 6px; border: none; cursor: pointer; font-size: 0.85rem; transition: opacity 0.2s; }
+        .btn-orange:hover { opacity: 0.9; }
+        .btn-green { padding: 0.65rem 1.25rem; background: var(--accent-green); color: #fff; font-weight: 700; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; font-size: 0.85rem; }
+        .btn-danger { padding: 0.35rem 0.75rem; background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); font-weight: 700; border-radius: 6px; cursor: pointer; font-size: 0.8rem; transition: background 0.2s; }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.3); }
         
         /* TABLEAUX */
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
-        th { background: #1c1c1c; padding: 0.85rem 1rem; color: var(--accent-gold); border-bottom: 1px solid var(--border-dark); font-weight: 700; }
+        th { background: #1c1c1c; padding: 0.85rem 1rem; color: var(--accent-orange); border-bottom: 1px solid var(--border-dark); font-weight: 700; }
         td { padding: 1.25rem 1rem; border-bottom: 1px solid var(--border-dark); color: #e2e8f0; }
         
-        /* BADGES */
-        .badge { padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        .badge-attente { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-        .badge-vu { background: rgba(79, 70, 229, 0.15); color: #818cf8; }
-        .badge-entretien { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-        .badge-rejet { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-
         @media (max-width: 768px) {
             .mobile-header { display: flex; }
             .sidebar { transform: translateX(-100%); height: calc(100vh - 57px); top: 57px; }
@@ -75,17 +77,17 @@
 
 <!-- MOBILE HEADER -->
 <div class="mobile-header">
-    <div class="brand" id="mobileBrand">KamerJobs — Offres</div>
+    <div class="brand" id="mobileBrand">Jobs <span>Offers</span> — Offres</div>
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
 </div>
 
-<!-- SIDEBAR MODIFIÉE -->
+<!-- SIDEBAR -->
 <nav class="sidebar" id="sidebar">
-    <div class="sidebar-brand">KamerJobs</div>
+    <div class="sidebar-brand">Jobs <span>Offers</span></div>
     <ul class="sidebar-menu">
         <li><div class="menu-item active" id="link-offres" onclick="switchTab('offres')">💼 Offres</div></li>
         <li><div class="menu-item" id="link-candidatures" onclick="switchTab('candidatures')">📁 Candidatures</div></li>
-        <!-- Correction Déconnexion : Nettoie la session et redirige -->
+        <li><div class="menu-item" id="link-newsletter" onclick="switchTab('newsletter')">✉️ Newsletter</div></li>
         <li><div class="menu-item logout" onclick="handleLogout()">↪ Déconnexion</div></li>
     </ul>
 </nav>
@@ -103,7 +105,7 @@
         </div>
 
         <div class="card">
-            <h2 style="font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--accent-gold);">Créer une nouvelle offre</h2>
+            <h2 style="font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--accent-orange);">Créer une nouvelle offre</h2>
             <form id="addJobForm">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
                     <div>
@@ -112,11 +114,11 @@
                     </div>
                     <div>
                         <label>Entreprise / Organisation</label>
-                        <input type="text" id="jobCompany" required placeholder="Ex: MTN Cameroun">
+                        <input type="text" id="jobCompany" required placeholder="Ex: GEDCOOP">
                     </div>
                     <div>
                         <label>Lieu d'affectation</label>
-                        <input type="text" id="jobLocation" required placeholder="Ex: Douala, Cameroun">
+                        <input type="text" id="jobLocation" required placeholder="Ex: Douala">
                     </div>
                     <div>
                         <label>Type de Contrat</label>
@@ -127,12 +129,12 @@
                 </div>
                 <label>Description abrégée des exigences</label>
                 <textarea id="jobDesc" rows="3" required placeholder="Compétences recherchées, missions principales..."></textarea>
-                <button type="button" class="btn-gold" onclick="publishJob()">Publier l'offre d'emploi</button>
+                <button type="button" class="btn-orange" onclick="publishJob()">Publier l'offre d'emploi</button>
             </form>
         </div>
 
         <div class="card">
-            <h2 style="font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--accent-gold);">Offres actuellement en ligne</h2>
+            <h2 style="font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--accent-orange);">Offres actuellement en ligne</h2>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
@@ -158,11 +160,11 @@
                 <h1>Suivi & Archives des Candidatures</h1>
                 <p style="font-size: 0.85rem; color:#64748b; margin-top: 0.25rem;">Consultez les profils reçus et mettez à jour leur statut de traitement.</p>
             </div>
-            <button class="btn-gold" onclick="loadCandidatures()">Actualiser</button>
+            <button class="btn-green" onclick="loadCandidatures()">Actualiser</button>
         </div>
 
         <div class="card">
-            <h2 style="font-size: 1.15rem; margin-bottom: 1.25rem; font-weight: 700; color: var(--accent-gold);">Dossiers Enregistrés</h2>
+            <h2 style="font-size: 1.15rem; margin-bottom: 1.25rem; font-weight: 700; color: var(--accent-orange);">Dossiers Enregistrés</h2>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
@@ -182,15 +184,51 @@
         </div>
     </section>
 
+    <!-- SECTION NEWSLETTER -->
+    <section id="section-newsletter" class="page-section">
+        <div class="page-title-block">
+            <div>
+                <h1>Gestion des Abonnés à la Newsletter</h1>
+                <p style="font-size: 0.85rem; color:#64748b; margin-top: 0.25rem;">Visualisez la base de données des emails abonnés et gérez les listes.</p>
+            </div>
+            <button class="btn-green" onclick="loadNewsletter()">Actualiser</button>
+        </div>
+
+        <div class="card">
+            <h2 style="font-size: 1.15rem; margin-bottom: 1.25rem; font-weight: 700; color: var(--accent-orange);">Emails Enregistrés</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Adresse Email</th>
+                            <th>Date d'inscription</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="newsletterTableBody">
+                        <tr><td colspan="3" style="color: #64748b;">Chargement des abonnés...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
 </main>
 
 <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyWCzEFqbU7J6JZMrD2MANYOEdXexMS-VVVuAGVb8K9kf5pnuwW0elPLiUYvlRBUSMX1g/exec";
-    const token = "CameroonTalent_SecureToken_2026";
+    const API_URL = "https://script.google.com/macros/s/AKfycbzM2O249IqR9_pzAcwW-nV-OP0GFz01nX61FpC0vSMQx2huZ9YCkuUF7OVIGEcyvpGkuA/exec";
+    const token = "JobsOffers_SecureToken_2026";
 
+    /* VÉRIFICATION STRICTE D'AUTHENTIFICATION */
     document.addEventListener("DOMContentLoaded", () => {
-        loadJobsTable();
-        loadCandidatures();
+        if (sessionStorage.getItem("isAdminAuthenticated") !== "true") {
+            window.location.href = "login.html";
+        } else {
+            document.body.style.display = "flex"; // Affiche la page uniquement si connecté
+            loadJobsTable();
+            loadCandidatures();
+            loadNewsletter();
+        }
     });
 
     function toggleSidebar() { 
@@ -205,13 +243,15 @@
         document.getElementById(`section-${tabName}`).classList.add('active');
         document.getElementById(`link-${tabName}`).classList.add('active');
         
-        document.getElementById('mobileBrand').innerText = tabName === 'offres' ? 'KamerJobs — Offres' : 'KamerJobs — Candidatures';
+        let displayTabName = 'Offres';
+        if(tabName === 'candidatures') displayTabName = 'Candidatures';
+        if(tabName === 'newsletter') displayTabName = 'Newsletter';
         
-        // Ferme la sidebar sur mobile après sélection
+        document.getElementById('mobileBrand').innerHTML = `Jobs <span>Offers</span> — ${displayTabName}`;
         document.getElementById('sidebar').classList.remove('open');
     }
 
-    /* ACTIONS DE LA PAGE OFFRES */
+    /* ACTIONS : OFFRES (CHARGEMENT, CRÉATION, SUPPRESSION) */
     function loadJobsTable() {
         fetch(`${API_URL}?action=getJobs`)
         .then(r => r.json())
@@ -226,6 +266,9 @@
                     <td><button class="btn-danger" onclick="archiveJob('${job.id}')">Supprimer</button></td>
                 </tr>
             `).join('');
+        })
+        .catch(err => {
+            document.getElementById('jobsTableBody').innerHTML = "<tr><td colspan='4' style='color:#ef4444;'>Erreur de chargement des offres.</td></tr>";
         });
     }
 
@@ -240,18 +283,34 @@
                 description: document.getElementById('jobDesc').value
             }
         };
-        fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) }).then(r => r.json()).then(data => {
-            if(data.success) { alert("L'offre a bien été publiée sur KamerJobs !"); document.getElementById('addJobForm').reset(); loadJobsTable(); }
+        fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
+        .then(r => r.json())
+        .then(data => {
+            if(data.success) { 
+                alert("L'offre a bien été publiée sur Jobs Offers !"); 
+                document.getElementById('addJobForm').reset(); 
+                loadJobsTable(); 
+            }
         });
     }
 
     function archiveJob(id) {
-        if(!confirm("Voulez-vous vraiment retirer cette offre ?")) return;
-        fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "deleteJob", token: token, id: id }) })
-        .then(r => r.json()).then(data => { if(data.success) { loadJobsTable(); } });
+        if(!confirm("Voulez-vous vraiment retirer et supprimer cette offre définitivement ?")) return;
+        fetch(API_URL, { 
+            method: 'POST', 
+            body: JSON.stringify({ action: "deleteJob", token: token, id: id }) 
+        })
+        .then(r => r.json())
+        .then(data => { 
+            if(data.success) { 
+                loadJobsTable(); 
+            } else {
+                alert("Erreur lors de la suppression.");
+            }
+        });
     }
 
-    /* ACTIONS DE LA PAGE CANDIDATURES */
+    /* ACTIONS : CANDIDATURES */
     function loadCandidatures() {
         fetch(`${API_URL}?action=getAdminApplications`)
         .then(r => r.json())
@@ -262,11 +321,11 @@
             tbody.innerHTML = data.map(app => `
                 <tr>
                     <td><strong>${app.candidateName}</strong><br><span style="font-size:0.75rem;color:#64748b;">📞 ${app.phone}</span></td>
-                    <td><span style="font-weight:600;color:var(--accent-gold);">${app.jobTitle}</span><br><small style="color:#64748b;">ID: ${app.id}</small></td>
+                    <td><span style="font-weight:600;color:var(--accent-orange);">${app.jobTitle}</span><br><small style="color:#64748b;">ID: ${app.id}</small></td>
                     <td>${app.exp} ans</td>
                     <td>${app.date || '—'}</td>
                     <td>
-                        <select onchange="changeStatus('${app.id}', this.value)" style="margin-bottom:0; padding: 0.4rem;">
+                        <select onchange="changeStatus('${app.id}', this.value)" style="margin-bottom:0; padding: 0.4rem; background:#1c1c1c; border-color:#333;">
                             <option value="En attente" ${app.status === 'En attente' ? 'selected' : ''}>⏳ En attente</option>
                             <option value="Vu" ${app.status === 'Vu' ? 'selected' : ''}>👀 Vu</option>
                             <option value="Entretien" ${app.status === 'Entretien' ? 'selected' : ''}>📅 Entretien</option>
@@ -275,6 +334,9 @@
                     </td>
                 </tr>
             `).join('');
+        })
+        .catch(err => {
+            document.getElementById('globalAppsBody').innerHTML = "<tr><td colspan='5' style='color:#ef4444;'>Erreur de chargement des candidatures.</td></tr>";
         });
     }
 
@@ -289,14 +351,49 @@
         });
     }
 
-    /* CORRECTION SÉCURISÉE DU BOUTON DE DÉCONNEXION */
-    function handleLogout() {
-        if(confirm("Confirmez-vous votre déconnexion de l'espace d'administration KamerJobs ?")) {
-            // Optionnel : Nettoyage d'un éventuel système de session local
-            sessionStorage.clear();
-            localStorage.clear();
+    /* ACTIONS : NEWSLETTER */
+    function loadNewsletter() {
+        fetch(`${API_URL}?action=getNewsletter`)
+        .then(r => r.json())
+        .then(data => {
+            const tbody = document.getElementById('newsletterTableBody');
+            if(!data || !data.length) { tbody.innerHTML = "<tr><td colspan='3' style='color:#64748b;'>Aucun abonné enregistré.</td></tr>"; return; }
             
-            // Redirection vers ta mire de connexion (remplace par 'login.html' ou l'URL de ton choix)
+            tbody.innerHTML = data.map(sub => `
+                <tr>
+                    <td><strong>${sub.email}</strong></td>
+                    <td>${sub.date || '—'}</td>
+                    <td>
+                        <button class="btn-danger" onclick="deleteSubscriber('${sub.email}')">Supprimer</button>
+                    </td>
+                </tr>
+            `).join('');
+        })
+        .catch(err => {
+            document.getElementById('newsletterTableBody').innerHTML = "<tr><td colspan='3' style='color:#ef4444;'>Erreur de chargement de la newsletter.</td></tr>";
+        });
+    }
+
+    function deleteSubscriber(email) {
+        if(!confirm(`Voulez-vous vraiment désabonner et supprimer ${email} de la newsletter ?`)) return;
+        fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({ action: "deleteSubscriber", token: token, email: email })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if(data.success) {
+                loadNewsletter();
+            } else {
+                alert("Erreur lors de la désinscription.");
+            }
+        });
+    }
+
+    /* DÉCONNEXION */
+    function handleLogout() {
+        if(confirm("Confirmez-vous votre déconnexion de l'espace d'administration Jobs Offers ?")) {
+            sessionStorage.clear();
             window.location.href = "login.html"; 
         }
     }
