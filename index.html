@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobsOffers - Portail Emploi au Cameroun</title>
+    <title>JobsOffers - Job Portal in Cameroon</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -191,11 +191,11 @@
         </a>
         <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         <ul class="nav-links" id="navLinks">
-            <li class="active" id="nav-accueil"><a href="#" onclick="scrollToJobs(event)">Accueil</a></li>
-            <li id="nav-employeurs"><a href="#" onclick="showEmployersSection(event)">Employeurs</a></li>
-            <li id="nav-about"><a href="#" onclick="showAboutSection(event)">À propos</a></li>
-            <li id="nav-help"><a href="#" onclick="showHelpSection(event)">Aide / FAQ</a></li>
-            <li><a href="#" onclick="showTrackingSection()">Suivi Candidature</a></li>
+            <li class="active" id="nav-accueil"><a href="#" onclick="scrollToJobs(event)">Home</a></li>
+            <li id="nav-employeurs"><a href="#" onclick="showEmployersSection(event)">Employers</a></li>
+            <li id="nav-about"><a href="#" onclick="showAboutSection(event)">About</a></li>
+            <li id="nav-help"><a href="#" onclick="showHelpSection(event)">Help / FAQ</a></li>
+            <li><a href="#" onclick="showTrackingSection()">Application Tracking</a></li>
         </ul>
     </div>
 </nav>
@@ -204,19 +204,19 @@
 <section class="search-section">
     <div class="search-container">
         <div class="search-input">
-            <input type="text" id="keywordSearch" placeholder="Titre d'annonce, Nom de société...">
+            <input type="text" id="keywordSearch" placeholder="Job title, Company name...">
         </div>
         <div class="search-select">
             <select id="cityFilter">
-                <option value="">- Localisation -</option>
+                <option value="">- Location -</option>
                 <option value="Douala">Douala</option>
                 <option value="Yaoundé">Yaoundé</option>
                 <option value="Garoua">Garoua</option>
                 <option value="Bafoussam">Bafoussam</option>
             </select>
         </div>
-        <button class="btn btn-search" onclick="triggerSearch()">Chercher</button>
-        <button class="btn btn-cv" onclick="showTrackingSection()">✍️ Envoyer CV / Suivi</button>
+        <button class="btn btn-search" onclick="triggerSearch()">Search</button>
+        <button class="btn btn-cv" onclick="showTrackingSection()">✍️ Submit CV / Tracking</button>
     </div>
 </section>
 
@@ -227,12 +227,12 @@
         <!-- SECTION 1 : LISTES ET ONGLETS ACCUEIL -->
         <div id="viewList">
             <div class="tabs-container">
-                <button class="tab-btn active" onclick="switchTab('une')"><span style="color: #ffd166;">★</span> À LA UNE <span class="badge" id="badgeUne">0</span></button>
+                <button class="tab-btn active" onclick="switchTab('une')"><span style="color: #ffd166;">★</span> FEATURED <span class="badge" id="badgeUne">0</span></button>
                 <button class="tab-btn" onclick="switchTab('jobs')">JOBS <span class="badge" id="badgeJobs">0</span></button>
-                <button class="tab-btn" onclick="switchTab('stages')">STAGES <span class="badge" id="badgeStages">0</span></button>
+                <button class="tab-btn" onclick="switchTab('stages')">INTERNSHIPS <span class="badge" id="badgeStages">0</span></button>
             </div>
             <div class="jobs-list-card">
-                <div id="jobsContainer">Chargement des opportunités...</div>
+                <div id="jobsContainer">Loading opportunities...</div>
             </div>
         </div>
 
@@ -249,7 +249,7 @@
         <!-- SECTION 3 : PAGE DETAIL D'UNE ENTREPRISE -->
         <div id="viewCompanyDetails" style="display: none;">
             <div id="companyBannerWrapper"></div>
-            <h2 class="company-annonces-title">Les annonces</h2>
+            <h2 class="company-annonces-title">Job Postings</h2>
             <div class="jobs-list-card">
                 <div id="companyAnnoncesContainer" class="comp-annonces-container"></div>
             </div>
@@ -258,57 +258,57 @@
         <!-- SECTION 4 : PAGE À PROPOS -->
         <div id="viewAbout" class="about-card" style="display: none;">
             <div class="about-banner">
-                <h2>À PROPOS DE JOBSOFFERS</h2>
-                <p>Votre partenaire carrière pour le développement économique et social du Cameroun</p>
+                <h2>ABOUT JOBSOFFERS</h2>
+                <p>Your career partner for economic and social development in Cameroon</p>
             </div>
             
             <div class="about-text">
                 <p>
-                    <strong>JobsOffers</strong> est un portail carrière de premier plan conçu spécifiquement pour stimuler la croissance professionnelle au Cameroun. 
-                    Il s'agit d'un projet technologique commun et stratégique entre <strong>PeopleHop Sarl</strong>, une société de droit camerounais spécialisée de pointe en Ressources Humaines, 
-                    et <strong>J.I.R Ltd</strong>, une entreprise rwandaise leader reconnue en recrutement en ligne en Afrique de l'Est.
+                    <strong>JobsOffers</strong> is a premier career portal specifically designed to stimulate professional growth in Cameroon. 
+                    It is a joint strategic technological project between <strong>PeopleHop Sarl</strong>, a leading Cameroonian company specialized in Human Resources, 
+                    and <strong>J.I.R Ltd</strong>, a recognized leader in online recruitment in East Africa.
                 </p>
                 
                 <div class="about-partners">
                     <div class="partner-box">
-                        <strong>L'expertise RH Locale :</strong>
-                        PeopleHop Sarl dispose d'une connaissance fine du tissu d'affaires camerounais.
-                        <br><a href="https://www.peoplehopsarl.com" target="_blank">→ Visiter PeopleHop Sarl</a>
+                        <strong>Local HR Expertise:</strong>
+                        PeopleHop Sarl possesses in-depth knowledge of the Cameroonian business landscape.
+                        <br><a href="https://www.peoplehopsarl.com" target="_blank">→ Visit PeopleHop Sarl</a>
                     </div>
                     <div class="partner-box">
-                        <strong>L'infrastructure Leader :</strong>
-                        J.I.R Ltd apporte sa puissance technologique éprouvée via son réseau d'excellence africain.
-                        <br><a href="https://www.jobinrwanda.com" target="_blank">→ Découvrir J.I.R Ltd</a>
+                        <strong>Leading Infrastructure:</strong>
+                        J.I.R Ltd provides its proven technological power through its African network of excellence.
+                        <br><a href="https://www.jobinrwanda.com" target="_blank">→ Discover J.I.R Ltd</a>
                     </div>
                 </div>
 
-                <div class="section-title-about">Une Solution Recrutement Innovante</div>
+                <div class="section-title-about">An Innovative Recruitment Solution</div>
                 <p style="margin-bottom: 1rem;">
-                    Our portail propose aux employeurs bien plus que la simple possibilité d'afficher des offres d'emploi traditionnelles. 
-                    Nous présentons une <strong>solution complète de recrutement en ligne</strong>. C'est un environnement virtuel centralisé qui permet de piloter, 
-                    structurer et faire le suivi de l'intégralité de vos processus et activités de sourcing de talents à partir d'un espace unique.
+                    Our portal offers employers much more than just the ability to post traditional job openings. 
+                    We provide a <strong>comprehensive online recruitment solution</strong>. It is a centralized virtual environment that allows you to manage, 
+                    structure, and track your entire talent sourcing processes and activities from a single space.
                 </p>
 
                 <div class="about-grid-benefits">
                     <div class="benefit-card">
-                        <h4>💼 Pour les Employeurs</h4>
-                        <p>Une visibilité de marque accrue, des outils d'évaluation, la centralisation des CVs reçus, ainsi qu'une vitrine sur-mesure pour promouvoir votre culture d'entreprise, vos rémunérations et avantages sociaux.</p>
+                        <h4>💼 For Employers</h4>
+                        <p>Increased brand visibility, evaluation tools, centralization of received CVs, as well as a tailored showcase to promote your company culture, compensation, and social benefits.</p>
                     </div>
                     <div class="benefit-card">
-                        <h4>🎓 Pour les Chercheurs d'Emploi</h4>
-                        <p>Un accès 100% gratuit à un réseau permanent d'opportunités fiables. Des outils d'aiguillage performants pour faire progresser durablement votre plan de carrière au Cameroun.</p>
+                        <h4>🎓 For Job Seekers</h4>
+                        <p>100% free access to a continuous network of reliable opportunities. Powerful guidance tools to sustainably advance your career plan in Cameroon.</p>
                     </div>
                 </div>
 
-                <div class="section-title-about">Notre Mission</div>
+                <div class="section-title-about">Our Mission</div>
                 <div class="mission-highlight">
-                    "Notre mission absolue est de vous aider à tirer le meilleur parti de votre vie professionnelle. Que ce soit pour décrocher le poste idéal, obtenir des conseils de gestion de carrière précis, dénicher le profil parfait ou accroître la notoriété de votre entreprise, nous mettons à votre service un vaste éventail d'outils digitaux efficaces."
+                    "Our absolute mission is to help you get the most out of your professional life. Whether it is to land the ideal position, get precise career management advice, find the perfect profile, or increase your company's awareness, we provide you with a wide range of effective digital tools."
                 </div>
 
                 <p>
-                    Le défi majeur actuel dans l'univers du recrutement n'est pas simplement de collecter des candidatures en masse, mais de filtrer et d'identifier **d'excellent candidats**. 
-                    C’est pourquoi <strong>JobsOffers</strong> préconise une approche rigoureusement ciblée : connecter les professionnels selon leur secteur strict, leurs compétences transversales et leurs années d'expérience. 
-                    Nous garantissent à chaque entreprise un service partenarial à haute valeur ajoutée.
+                    The major current challenge in the recruitment universe is not simply collecting mass applications, but filtering and identifying **excellent candidates**. 
+                    This is why <strong>JobsOffers</strong> advocates a rigorously targeted approach: connecting professionals according to their exact sector, transversal skills, and years of experience. 
+                    We guarantee a high value-added partnership service to every company.
                 </p>
             </div>
         </div>
@@ -316,63 +316,63 @@
         <!-- SECTION FAQ (AIDE) -->
         <div id="viewHelp" class="about-card" style="display: none;">
             <div class="about-banner">
-                <h2>CENTRE D'AIDE & FAQ</h2>
-                <p>Trouvez rapidement des réponses à toutes vos questions d'utilisation</p>
+                <h2>HELP CENTER & FAQ</h2>
+                <p>Quickly find answers to all your user questions</p>
             </div>
             
-            <h3 class="faq-section-title">Foire aux questions</h3>
+            <h3 class="faq-section-title">Frequently Asked Questions</h3>
             <div class="faq-container">
                 <!-- Question 1 -->
                 <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">Comment postuler à une offre d'emploi ?</button>
+                    <button class="faq-trigger" onclick="toggleFaq(this)">How do I apply for a job offer?</button>
                     <div class="faq-content">
                         <div class="faq-content-inner">
-                            C'est très simple ! <br>
-                            1. Parcourez les offres sur notre page d'accueil ou recherchez-les à l'aide de la barre de recherche. <br>
-                            2. Cliquez sur l'offre qui vous intéresse pour voir tous les détails du poste. <br>
-                            3. Cliquez sur le bouton <strong>"Postuler à cette offre"</strong>. <br>
-                            4. Remplissez le formulaire de candidature intuitif en 4 étapes simples et valisez votre dossier.
+                            It's very simple! <br>
+                            1. Browse the offers on our homepage or search for them using the search bar. <br>
+                            2. Click on the offer that interests you to see all the details of the position. <br>
+                            3. Click on the <strong>"Apply for this job"</strong> button. <br>
+                            4. Fill out the intuitive application form in 4 simple steps and submit your file.
                         </div>
                     </div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">Les services de JobsOffers sont-ils payants ?</button>
+                    <button class="faq-trigger" onclick="toggleFaq(this)">Are JobsOffers services paid?</button>
                     <div class="faq-content">
                         <div class="faq-content-inner">
-                            Non, pour les candidats, l'accès à notre plateforme ainsi que le dépôt de candidature sont <strong>100% gratuits</strong>. Les opportunités professionnelles publiées sont accessibles à tous sans aucun frais caché.
+                            No, for candidates, access to our platform as well as submitting applications are <strong>100% free</strong>. Published professional opportunities are accessible to everyone without any hidden fees.
                         </div>
                     </div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">Comment fonctionne le suivi de candidature ?</button>
+                    <button class="faq-trigger" onclick="toggleFaq(this)">How does application tracking work?</button>
                     <div class="faq-content">
                         <div class="faq-content-inner">
-                            Vous pouvez suivre en temps réel l'évolution de vos dossiers. <br>
-                            Cliquez sur le bouton <strong>"Suivi Candidature"</strong> (dans le menu ou à côté du moteur de recherche), saisissez le numéro de téléphone que vous avez utilisé pour postuler, et vous obtiendrez instantanément la liste de vos candidatures ainsi que leur statut actuel (En cours, Retenu, etc.).
+                            You can track the progress of your applications in real time. <br>
+                            Click on the <strong>"Application Tracking"</strong> button (in the menu or next to the search engine), enter the phone number you used to apply, and you will instantly get the list of your applications and their current status (In progress, Selected, etc.).
                         </div>
                     </div>
                 </div>
 
                 <!-- Question 4 -->
                 <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">Je suis recruteur, comment publier une offre ?</button>
+                    <button class="faq-trigger" onclick="toggleFaq(this)">I am a recruiter, how do I post an offer?</button>
                     <div class="faq-content">
                         <div class="faq-content-inner">
-                            Pour le moment, l'espace d'auto-publication direct est réservé. Si vous souhaitez diffuser une offre d'emploi ou de stage sur <strong>JobsOffers</strong>, veuillez contacter notre équipe d'assistance par e-mail à l'adresse <strong>contact@jobsoffers.cm</strong>. Nous configurerons votre espace partenaire sur-mesure.
+                            For now, the direct self-publishing space is restricted. If you want to distribute a job or internship offer on <strong>JobsOffers</strong>, please contact our support team by email at <strong>contact@jobsoffers.cm</strong>. We will configure your customized partner space.
                         </div>
                     </div>
                 </div>
 
                 <!-- Question 5 -->
                 <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">Puis-je modifier ma candidature après envoi ?</button>
+                    <button class="faq-trigger" onclick="toggleFaq(this)">Can I modify my application after sending it?</button>
                     <div class="faq-content">
                         <div class="faq-content-inner">
-                            Une fois envoyée, une candidature est directement mise à disposition du recruteur. Si vous avez fait une erreur importante dans vos informations, nous vous invitons à soumettre à nouveau votre dossier avec le même numéro de téléphone, ou à nous envoyer un message d'ajustement.
+                            Once sent, an application is directly made available to the recruiter. If you made a significant mistake in your information, we invite you to submit your file again with the same phone number, or to send us an adjustment message.
                         </div>
                     </div>
                 </div>
@@ -382,53 +382,53 @@
         <!-- SECTION 5 : FORMULAIRE DE CANDIDATURE -->
         <div id="viewForm" class="form-card" style="display: none;">
             <div class="progress-bar">
-                <span class="progress-step active" id="p1">1. Profil</span>
+                <span class="progress-step active" id="p1">1. Profile</span>
                 <span class="progress-step" id="p2">2. Documents</span>
-                <span class="progress-step" id="p3">3. Expérience</span>
+                <span class="progress-step" id="p3">3. Experience</span>
                 <span class="progress-step" id="p4">4. Confirmation</span>
             </div>
 
             <form id="multiStepForm">
                 <div class="step-container active" id="step1">
-                    <label>Nom & Prénom</label>
-                    <input type="text" id="candName" required placeholder="Ex: Trésor Mbe">
-                    <label>Téléphone portable</label>
-                    <input type="tel" id="candPhone" required placeholder="Ex: 690000000">
-                    <label>Ville actuelle</label>
+                    <label>Full Name</label>
+                    <input type="text" id="candName" required placeholder="E.g., Trésor Mbe">
+                    <label>Mobile Phone</label>
+                    <input type="tel" id="candPhone" required placeholder="E.g., 690000000">
+                    <label>Current City</label>
                     <select id="candCity">
                         <option>Douala</option><option>Yaoundé</option><option>Garoua</option><option>Bafoussam</option>
                     </select>
-                    <button type="button" class="btn btn-cv" onclick="nextStep(2)">Suivant</button>
+                    <button type="button" class="btn btn-cv" onclick="nextStep(2)">Next</button>
                 </div>
 
                 <div class="step-container" id="step2">
-                    <label>Lien du CV</label>
-                    <input type="text" id="candCV" placeholder="Lien Drive, Dropbox ou tapez OK">
-                    <label>Plus haut diplôme</label>
-                    <input type="text" id="candDiploma" placeholder="Ex: Master">
+                    <label>CV Link</label>
+                    <input type="text" id="candCV" placeholder="Drive, Dropbox link or type OK">
+                    <label>Highest Degree</label>
+                    <input type="text" id="candDiploma" placeholder="E.g., Master's Degree">
                     <div style="display: flex; gap: 0.5rem;">
-                        <button type="button" class="btn btn-search" onclick="prevStep(1)">Retour</button>
-                        <button type="button" class="btn btn-cv" onclick="nextStep(3)">Suivant</button>
+                        <button type="button" class="btn btn-search" onclick="prevStep(1)">Back</button>
+                        <button type="button" class="btn btn-cv" onclick="nextStep(3)">Next</button>
                     </div>
                 </div>
 
                 <div class="step-container" id="step3">
-                    <label>Années d'expérience vécues</label>
-                    <input type="number" id="appExp" required placeholder="Ex: 2">
-                    <label>Présentation abrégée</label>
-                    <textarea id="appMotivation" rows="4" placeholder="Vos points forts..."></textarea>
+                    <label>Years of Experience</label>
+                    <input type="number" id="appExp" required placeholder="E.g., 2">
+                    <label>Short Presentation</label>
+                    <textarea id="appMotivation" rows="4" placeholder="Your strengths..."></textarea>
                     <div style="display: flex; gap: 0.5rem;">
-                        <button type="button" class="btn btn-search" onclick="prevStep(2)">Retour</button>
-                        <button type="button" class="btn btn-cv" onclick="setupSummary()">Vérifier</button>
+                        <button type="button" class="btn btn-search" onclick="prevStep(2)">Back</button>
+                        <button type="button" class="btn btn-cv" onclick="setupSummary()">Verify</button>
                     </div>
                 </div>
 
                 <div class="step-container" id="step4">
-                    <h3 style="margin-bottom: 1rem; color: var(--primary-green);">Validation du dossier</h3>
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-green);">Application Validation</h3>
                     <div id="summaryReview" style="background: #f8fafc; border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.7;"></div>
                     <div style="display: flex; gap: 0.5rem;">
-                        <button type="button" class="btn btn-search" onclick="prevStep(3)">Ajuster</button>
-                        <button type="button" class="btn btn-cv" onclick="submitPremiumApplication()">Transmettre Candidature</button>
+                        <button type="button" class="btn btn-search" onclick="prevStep(3)">Adjust</button>
+                        <button type="button" class="btn btn-cv" onclick="submitPremiumApplication()">Submit Application</button>
                     </div>
                 </div>
             </form>
@@ -436,28 +436,28 @@
 
         <!-- SECTION 6 : SUIVI CANDIDATURE -->
         <div id="viewDashboard" class="form-card" style="display: none;">
-            <h2>Suivi de vos Candidatures</h2>
+            <h2>Track Your Applications</h2>
             <div id="trackingInputBlock" style="margin-bottom: 1.5rem;">
-                <label>Saisissez votre numéro de téléphone :</label>
+                <label>Enter your phone number:</label>
                 <div style="display: flex; gap: 0.5rem;">
-                    <input type="tel" id="searchPhone" placeholder="Ex: 690000000" style="margin: 0;">
-                    <button class="btn btn-cv" onclick="triggerSearchDashboard()">Rechercher</button>
+                    <input type="tel" id="searchPhone" placeholder="E.g., 690000000" style="margin: 0;">
+                    <button class="btn btn-cv" onclick="triggerSearchDashboard()">Search</button>
                 </div>
             </div>
-            <div id="dashboardHistory" style="margin-top: 1rem;">Entrez votre numéro pour afficher votre historique.</div>
+            <div id="dashboardHistory" style="margin-top: 1rem;">Enter your number to display your history.</div>
         </div>
     </section>
 
     <!-- COLONNE DROITE -->
     <aside class="sidebar">
         <div class="widget-card">
-            <h3>Souscrire à notre newsletter</h3>
+            <h3>Subscribe to our newsletter</h3>
             <form class="newsletter-form" id="newsletterForm" onsubmit="submitNewsletter(event)">
-                <label>Noms <span style="color: red;">*</span></label>
-                <input type="text" id="newsName" required placeholder="Ex: Cabrel Mbouyom">
+                <label>Names <span style="color: red;">*</span></label>
+                <input type="text" id="newsName" required placeholder="E.g., Cabrel Mbouyom">
                 <label>Email <span style="color: red;">*</span></label>
-                <input type="email" id="newsEmail" required placeholder="Ex: cabrel@exemple.com">
-                <button type="submit" class="btn-newsletter" id="btnNewsSubmit">Souscrire</button>
+                <input type="email" id="newsEmail" required placeholder="E.g., cabrel@example.com">
+                <button type="submit" class="btn-newsletter" id="btnNewsSubmit">Subscribe</button>
             </form>
         </div>
     </aside>
@@ -467,18 +467,18 @@
     <div class="footer-top">
         <div class="footer-column">
             <h4>JobsOffers</h4>
-            <p>Connecter les meilleurs talents aux meilleures opportunités du pays.</p>
+            <p>Connecting the best talents with the best opportunities in the country.</p>
         </div>
         <div class="footer-column">
             <h4>Support</h4>
             <ul>
                 <li>📧 contact@jobsoffers.cm</li>
-                <li>📍 Douala, Cameroun</li>
+                <li>📍 Douala, Cameroon</li>
             </ul>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2026 JobsOffers. Tous droits réservés.</p>
+        <p>&copy; 2026 JobsOffers. All rights reserved.</p>
     </div>
 </footer>
 
@@ -627,7 +627,7 @@
         const annoncesContainer = document.getElementById('companyAnnoncesContainer');
 
         if(filtered.length === 0) {
-            annoncesContainer.innerHTML = `<p style="color: var(--text-muted); padding: 1rem 0;">Aucune annonce en cours de recrutement actuellement pour ${companyName}.</p>`;
+            annoncesContainer.innerHTML = `<p style="color: var(--text-muted); padding: 1rem 0;">No active job postings currently for ${companyName}.</p>`;
             return;
         }
 
@@ -637,12 +637,12 @@
             return `
                 <div class="comp-job-card">
                     <a href="#" class="comp-job-link" onclick="showJobDetails('${job.id}')">
-                        ${job.company} recrute un(e) ${job.title}
+                        ${job.company} is hiring a ${job.title}
                     </a>
                     <div class="comp-job-meta">
-                        Publié le 13-07-2026 | Postuler avant le ${deadline} <br>
-                        Expérience requise: ${job.experience || 'Débutant ou Intermédiaire'} <br>
-                        <strong>${isStage ? 'Stage' : 'Job'}</strong>
+                        Published on 13-07-2026 | Apply before ${deadline} <br>
+                        Required Experience: ${job.experience || 'Beginner or Intermediate'} <br>
+                        <strong>${isStage ? 'Internship' : 'Job'}</strong>
                     </div>
                 </div>
             `;
@@ -666,7 +666,7 @@
             document.getElementById('badgeStages').textContent = listStages.length;
             renderTabContent();
         }).catch(err => {
-            document.getElementById('jobsContainer').innerHTML = "<p style='color: var(--text-muted);'>Erreur lors du chargement des offres.</p>";
+            document.getElementById('jobsContainer').innerHTML = "<p style='color: var(--text-muted);'>Error loading opportunities.</p>";
         });
     }
 
@@ -686,7 +686,7 @@
         else if (currentActiveTab === 'stages') targetedList = listStages;
 
         if(!targetedList.length) {
-            container.innerHTML = "<p style='color: var(--text-muted); padding: 1.5rem 0;'>Aucune offre disponible dans cette catégorie.</p>";
+            container.innerHTML = "<p style='color: var(--text-muted); padding: 1.5rem 0;'>No offers available in this category.</p>";
             return;
         }
         container.innerHTML = targetedList.map(job => `
@@ -694,11 +694,11 @@
                 <div class="job-details">
                     <a href="#" class="job-title-link" onclick="showJobDetails('${job.id}')">${job.title}</a>
                     <div class="job-card-meta">
-                        <strong>${job.company}</strong> | 📍 ${job.location || 'Cameroun'} | Publié le 13-07-2026<br>
-                        <span class="tag-sector">${currentActiveTab === 'stages' ? 'Stage' : 'Job'}</span>
+                        <strong>${job.company}</strong> | 📍 ${job.location || 'Cameroon'} | Published on 13-07-2026<br>
+                        <span class="tag-sector">${currentActiveTab === 'stages' ? 'Internship' : 'Job'}</span>
                     </div>
                 </div>
-                <button class="btn btn-cv" onclick="showJobDetails('${job.id}')" style="padding: 0.5rem 1rem;">Voir détails</button>
+                <button class="btn btn-cv" onclick="showJobDetails('${job.id}')" style="padding: 0.5rem 1rem;">View details</button>
             </div>
         `).join('');
     }
@@ -747,7 +747,7 @@
     function showJobDetails(jobId) {
         const job = allRawJobs.find(j => String(j.id) === String(jobId));
         if(!job) {
-            alert("Impossible de trouver les détails de cette offre.");
+            alert("Unable to find details for this offer.");
             return;
         }
 
@@ -763,28 +763,28 @@
                 </div>
                 <div class="job-detail-info-grid">
                     <div class="job-detail-info-item">
-                        <strong>📍 Localisation :</strong> ${job.location || 'Cameroun'}
+                        <strong>📍 Location:</strong> ${job.location || 'Cameroon'}
                     </div>
                     <div class="job-detail-info-item">
-                        <strong>💼 Type de contrat :</strong> ${isStage ? 'Stage / Période d’apprentissage' : 'Emploi / Contrat CDD-CDI'}
+                        <strong>💼 Contract Type:</strong> ${isStage ? 'Internship / Apprenticeship Period' : 'Job / CDD-CDI Contract'}
                     </div>
                     <div class="job-detail-info-item">
-                        <strong>⏳ Expérience requise :</strong> ${job.experience || 'Débutant ou Intermédiaire'}
+                        <strong>⏳ Required Experience:</strong> ${job.experience || 'Beginner or Intermediate'}
                     </div>
                     <div class="job-detail-info-item">
-                        <strong>📅 Date de publication :</strong> Publié le 13-07-2026
+                        <strong>📅 Publication Date:</strong> Published on 13-07-2026
                     </div>
                 </div>
             </div>
             
             <div class="job-detail-body">
-                <h4>Description de l'offre</h4>
-                <p>${job.description ? job.description.replace(/\n/g, '<br>') : "Aucune description détaillée n'a été fournie pour cette offre. Veuillez postuler directement pour obtenir plus de détails auprès des équipes de recrutement."}</p>
+                <h4>Job Description</h4>
+                <p>${job.description ? job.description.replace(/\n/g, '<br>') : "No detailed description was provided for this offer. Please apply directly to obtain more details from the recruitment teams."}</p>
             </div>
 
             <div style="display: flex; gap: 1rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
-                <button class="btn btn-secondary" onclick="scrollToJobs(event)">← Retour aux offres</button>
-                <button class="btn btn-cv" onclick="openApplicationForm('${job.id}')">Postuler à cette offre ✍️</button>
+                <button class="btn btn-secondary" onclick="scrollToJobs(event)">← Back to offers</button>
+                <button class="btn btn-cv" onclick="openApplicationForm('${job.id}')">Apply for this job ✍️</button>
             </div>
         `;
 
@@ -807,10 +807,10 @@
 
     function setupSummary() {
         document.getElementById('summaryReview').innerHTML = `
-            <span style="color:var(--accent-orange);">Candidat :</span> ${document.getElementById('candName').value}<br>
-            <span style="color:var(--accent-orange);">Contact :</span> ${document.getElementById('candPhone').value}<br>
-            <span style="color:var(--accent-orange);">Localisation :</span> ${document.getElementById('candCity').value}<br>
-            <span style="color:var(--accent-orange);">Expérience :</span> ${document.getElementById('appExp').value} ans
+            <span style="color:var(--accent-orange);">Candidate:</span> ${document.getElementById('candName').value}<br>
+            <span style="color:var(--accent-orange);">Contact:</span> ${document.getElementById('candPhone').value}<br>
+            <span style="color:var(--accent-orange);">Location:</span> ${document.getElementById('candCity').value}<br>
+            <span style="color:var(--accent-orange);">Experience:</span> ${document.getElementById('appExp').value} years
         `;
         nextStep(4);
     }
@@ -824,7 +824,7 @@
         };
         fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) }).then(r => r.json()).then(data => {
             if(data.success) {
-                alert("Candidature transmise avec succès.");
+                alert("Application submitted successfully.");
                 document.getElementById('searchPhone').value = phone;
                 triggerSearchDashboard();
             }
@@ -836,14 +836,14 @@
         if(!phone) return;
         showTrackingSection();
         const hDiv = document.getElementById('dashboardHistory');
-        hDiv.innerHTML = "Recherche en cours...";
+        hDiv.innerHTML = "Search in progress...";
         fetch(`${API_URL}?action=getCandidateDashboard&phone=${phone}`).then(r => r.json()).then(data => {
-            if(!data.history || !data.history.length) { hDiv.innerHTML = "<p style='color:var(--text-muted);'>Aucun dossier trouvé.</p>"; return; }
+            if(!data.history || !data.history.length) { hDiv.innerHTML = "<p style='color:var(--text-muted);'>No files found.</p>"; return; }
             hDiv.innerHTML = data.history.map(item => `
                 <div class="job-card">
                     <div class="job-details">
                         <div class="job-title-link" style="pointer-events:none;">${item.title}</div>
-                        <div class="job-card-meta">${item.company} — Statut: <span style="color:var(--primary-green); font-weight:700;">${item.status}</span></div>
+                        <div class="job-card-meta">${item.company} — Status: <span style="color:var(--primary-green); font-weight:700;">${item.status}</span></div>
                     </div>
                 </div>
             `).join('');
@@ -864,7 +864,7 @@
         if (!nameValue || !emailValue) return;
 
         btn.disabled = true;
-        btn.textContent = "Inscription en cours...";
+        btn.textContent = "Subscription in progress...";
 
         try {
             const response = await fetch(API_URL, {
@@ -883,17 +883,17 @@
             const data = await response.json();
 
             if (data.success) {
-                alert(data.message || "Inscription réussie ! 🎉");
+                alert(data.message || "Subscription successful! 🎉");
                 document.getElementById('newsletterForm').reset(); // Vide tous les champs proprement
             } else {
-                alert("Erreur : " + (data.error || data.message || "Impossible de s'inscrire"));
+                alert("Error: " + (data.error || data.message || "Unable to subscribe"));
             }
         } catch (error) {
             console.error("Détail de l'erreur:", error);
-            alert("Une erreur est survenue lors de l'inscription : Erreur de communication avec le serveur.");
+            alert("An error occurred during registration: Communication error with the server.");
         } finally {
             btn.disabled = false;
-            btn.textContent = "Souscrire";
+            btn.textContent = "Subscribe";
         }
     }
 </script>
