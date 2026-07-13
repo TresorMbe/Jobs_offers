@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobs Offers - Connexion Administration</title>
+    <title>Jobs Offers - Admin Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -61,40 +61,40 @@
 <div class="login-container">
     <div class="brand-header">
         <a href="#" class="logo">Jobs <span>Offers</span></a>
-        <p>Espace d'administration et de gestion des talents</p>
+        <p>Administration and Talent Management Space</p>
     </div>
 
     <div class="card">
-        <h1>Connexion Secrétariat</h1>
+        <h1>Secretariat Login</h1>
         
-        <div class="error-message" id="errorMessage">Identifiants incorrects. Veuillez réessayer.</div>
+        <div class="error-message" id="errorMessage">Incorrect credentials. Please try again.</div>
 
         <form id="loginForm" onsubmit="handleLogin(event)">
-            <label for="username">Identifiant unique</label>
+            <label for="username">Unique ID</label>
             <div class="input-group">
-                <input type="text" id="username" required placeholder="Ex: admin_user" autocomplete="username">
+                <input type="text" id="username" required placeholder="E.g., admin_user" autocomplete="username">
             </div>
 
-            <label for="password">Mot de passe</label>
+            <label for="password">Password</label>
             <div class="input-group" style="margin-bottom: 0;">
                 <input type="password" id="password" required placeholder="••••••••••••" autocomplete="current-password">
-                <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">Afficher</button>
+                <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">Show</button>
             </div>
 
             <div class="form-options" style="margin-top: 1.25rem;">
                 <label class="remember-me">
                     <input type="checkbox" id="rememberMe">
-                    <span>Se souvenir de moi</span>
+                    <span>Remember me</span>
                 </label>
-                <a href="#" class="forgot-password" onclick="alert('Contactez l\'administrateur système pour réinitialiser vos accès.')">Mot de passe oublié ?</a>
+                <a href="#" class="forgot-password" onclick="alert('Contact the system administrator to reset your access.')">Forgot password?</a>
             </div>
 
-            <button type="submit" id="submitBtn" class="btn-orange">Se connecter de manière sécurisée</button>
+            <button type="submit" id="submitBtn" class="btn-orange">Log In Securely</button>
         </form>
     </div>
 
     <div class="footer-back">
-        <a href="index.html">← Retour au portail public</a>
+        <a href="index.html">← Back to public portal</a>
     </div>
 </div>
 
@@ -116,10 +116,10 @@
         
         if (passwordInput.type === "password") {
             passwordInput.type = "text";
-            toggleBtn.textContent = "Masquer";
+            toggleBtn.textContent = "Hide";
         } else {
             passwordInput.type = "password";
-            toggleBtn.textContent = "Afficher";
+            toggleBtn.textContent = "Show";
         }
     }
 
@@ -134,7 +134,7 @@
 
         // Désactivation du bouton pendant le traitement
         submitBtn.disabled = true;
-        submitBtn.textContent = "Vérification en cours...";
+        submitBtn.textContent = "Verification in progress...";
         errorDiv.style.display = "none";
 
         try {
@@ -170,18 +170,18 @@
                 window.location.href = "admin.html";
             } else {
                 // Affichage du message d'erreur renvoyé par l'API
-                errorDiv.textContent = data.error || "Identifiants incorrects. Veuillez réessayer.";
+                errorDiv.textContent = data.error || "Incorrect credentials. Please try again.";
                 errorDiv.style.display = "block";
                 document.getElementById("password").value = "";
             }
         } catch (error) {
             console.error("Erreur d'authentification:", error);
-            errorDiv.textContent = "Erreur de connexion au serveur. Veuillez réessayer plus tard.";
+            errorDiv.textContent = "Server connection error. Please try again later.";
             errorDiv.style.display = "block";
         } finally {
             // Réactivation du bouton
             submitBtn.disabled = false;
-            submitBtn.textContent = "Se connecter de manière sécurisée";
+            submitBtn.textContent = "Log In Securely";
         }
     }
 </script>
